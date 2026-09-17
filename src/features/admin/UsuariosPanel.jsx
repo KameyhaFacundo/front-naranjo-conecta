@@ -77,6 +77,9 @@ export default function UsuariosPanel() {
     setOcupado(usuario.id)
     try {
       await actualizarUsuario(usuario.id, { activo: !usuario.activo })
+      if (detalle?.usuario.id === usuario.id) {
+        setDetalle({ usuario: { ...detalle.usuario, activo: !usuario.activo } })
+      }
       recargar()
     } finally {
       setOcupado(null)
@@ -109,6 +112,7 @@ export default function UsuariosPanel() {
     setOcupado(usuario.id)
     try {
       await eliminarUsuario(usuario.id)
+      setDetalle(null)
       recargar()
     } finally {
       setOcupado(null)
@@ -141,17 +145,14 @@ export default function UsuariosPanel() {
 
       <ListaEstado cargando={cargando} error={error} vacio={!cargando && items.length === 0}>
         <div className="tabla-admin-scroll">
-          <table className="tabla-admin">
+          <table className="tabla-admin tabla-usuarios">
             <thead>
               <tr>
                 <th>Nombre</th>
                 <th>Email</th>
                 <th>Rol</th>
-                <th>Contacto</th>
-                <th>Publicaciones</th>
-                <th>Registro</th>
-                <th>Último acceso</th>
-                <th>IP</th>
+                <th className="col-opcional">Publicaciones</th>
+                <th className="col-opcional">Último acceso</th>
                 <th>Estado</th>
                 <th>Acciones</th>
               </tr>
@@ -162,15 +163,8 @@ export default function UsuariosPanel() {
                   <td>{u.nombre}</td>
                   <td>{u.email}</td>
                   <td>{NOMBRE_ROL[u.rol] ?? u.rol}</td>
-                  <td>
-                    {u.whatsapp && <div>{u.whatsapp}</div>}
-                    {u.zona && <div className="texto-suave">{u.zona}</div>}
-                    {!u.whatsapp && !u.zona && '—'}
-                  </td>
-                  <td>{totalPublicaciones(u.publicaciones)}</td>
-                  <td>{fecha(u.created_at)}</td>
-                  <td>{fechaHora(u.ultimo_acceso_at)}</td>
-                  <td>{u.ultima_ip ?? '—'}</td>
+                  <td className="col-opcional">{totalPublicaciones(u.publicaciones)}</td>
+                  <td className="col-opcional">{fechaHora(u.ultimo_acceso_at)}</td>
                   <td>
                     <span className={u.activo ? 'etiqueta-activo' : 'etiqueta-oculto'}>
                       {u.activo ? 'Activa' : 'Suspendida'}
@@ -189,22 +183,6 @@ export default function UsuariosPanel() {
                       >
                         {u.activo ? 'Suspender' : 'Reactivar'}
                       </button>
-                      <button
-                        type="button"
-                        className="btn-secundario"
-                        disabled={ocupado === u.id}
-                        onClick={() => resetear(u)}
-                      >
-                        Clave
-                      </button>
-                      <button
-                        type="button"
-                        className="btn-peligro"
-                        disabled={ocupado === u.id}
-                        onClick={() => eliminar(u)}
-                      >
-                        Eliminar
-                      </button>
                     </div>
                   </td>
                 </tr>
@@ -217,14 +195,21 @@ export default function UsuariosPanel() {
 
       {detalle && (
         <Modal titulo={`Cuenta de ${detalle.usuario.nombre}`} onCerrar={() => setDetalle(null)}>
-          <UsuarioDetalle usuario={detalle.usuario} cargando={cargandoDetalle} />
+          <UsuarioDetalle
+            usuario={detalle.usuario}
+            cargando={cargandoDetalle}
+            ocupado={ocupado === detalle.usuario.id}
+            onAlternarActivo={() => alternarActivo(detalle.usuario)}
+            onResetear={() => resetear(detalle.usuario)}
+            onEliminar={() => eliminar(detalle.usuario)}
+          />
         </Modal>
       )}
     </div>
   )
 }
 
-function UsuarioDetalle({ usuario, cargando }) {
+function UsuarioDetalle({ usuario, cargando, ocupado, onAlternarActivo, onResetear, onEliminar }) {
   return (
     <div className="usuario-detalle">
       <h3>{usuario.nombre}</h3>
@@ -292,6 +277,18 @@ function UsuarioDetalle({ usuario, cargando }) {
           })}
         </div>
       )}
+
+      <div className="usuario-acciones">
+        <button type="button" className="btn-secundario" disabled={ocupado} onClick={onAlternarActivo}>
+          {usuario.activo ? 'Suspender cuenta' : 'Reactivar cuenta'}
+        </button>
+        <button type="button" className="btn-secundario" disabled={ocupado} onClick={onResetear}>
+          Resetear contraseña
+        </button>
+        <button type="button" className="btn-peligro" disabled={ocupado} onClick={onEliminar}>
+          Eliminar cuenta
+        </button>
+      </div>
     </div>
   )
 }

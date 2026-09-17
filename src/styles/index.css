@@ -2383,6 +2383,31 @@ a:focus-visible {
   gap: 0.2rem;
 }
 
+.usuario-acciones {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.6rem;
+  margin-top: 1.5rem;
+  padding-top: 1.25rem;
+  border-top: 1px solid var(--borde);
+}
+
+/* Las acciones de la tabla van en una sola línea para no estirar la fila. */
+.tabla-admin .acciones-fila {
+  flex-wrap: nowrap;
+}
+
+.tabla-usuarios {
+  min-width: 640px;
+}
+
+@media (max-width: 640px) {
+  /* En el teléfono se ocultan las columnas que ya están en el detalle. */
+  .tabla-usuarios .col-opcional {
+    display: none;
+  }
+}
+
 /* Animaciones suaves (respetan "reducir movimiento" del sistema) */
 @keyframes subir {
   from {
