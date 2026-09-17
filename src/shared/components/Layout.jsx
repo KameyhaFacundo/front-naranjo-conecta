@@ -38,22 +38,22 @@ export default function Layout() {
     <div className="layout">
       <header className={`header ${menuAbierto ? 'header-menu-abierto' : ''}`}>
         <div className="header-fila">
-          <div className="marca-fila">
-            <NavLink to="/" className="marca">
-              <NaranjaMark size={26} />
-              {!enPaginaAuth && 'El Naranjo Conecta'}
-            </NavLink>
+          {enPaginaAuth ? (
+            <Link to="/" className="volver-flecha" aria-label="Volver al inicio">
+              ←
+            </Link>
+          ) : (
+            <div className="marca-fila">
+              <NavLink to="/" className="marca">
+                <NaranjaMark size={26} />
+                El Naranjo Conecta
+              </NavLink>
 
-            {enPaginaAuth ? (
-              <Link to="/" className="btn-emergencia btn-inicio">
-                <Icon name="pin" size={16} /> <span>Inicio</span>
-              </Link>
-            ) : (
               <Link to="/emergencias" className="btn-emergencia">
                 <Icon name="alerta" size={16} /> <span>Emergencias</span>
               </Link>
-            )}
-          </div>
+            </div>
+          )}
 
           {!enPaginaAuth && (
             <button

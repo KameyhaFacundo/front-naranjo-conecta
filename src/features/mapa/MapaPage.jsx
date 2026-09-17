@@ -8,18 +8,8 @@ import WhatsappButton from '../../shared/components/WhatsappButton.jsx'
 import { useListado } from '../../shared/hooks/useListado.js'
 import { ETIQUETAS_ESTADO } from '../reclamos/api.js'
 import { puntosDelMapa } from './api.js'
-import { CAPAS_BASE } from './capasBase.js'
+import { CAPAS_BASE, CENTRO_EL_NARANJO, ZOOM_MAPA_DEFECTO } from './capasBase.js'
 import { colorDeCapa, iconoDeCapa, iconoMiUbicacion } from './marcadores.js'
-
-// Centro del mapa: se configura por .env (VITE_MAPA_LAT / VITE_MAPA_LNG /
-// VITE_MAPA_ZOOM) para ajustarlo a las coordenadas reales de El Naranjo
-// cuando el relevamiento de campo las confirme. El valor por defecto es
-// un centro aproximado del departamento de Burruyacú.
-const CENTRO_EL_NARANJO = [
-  Number(import.meta.env.VITE_MAPA_LAT ?? -26.4833),
-  Number(import.meta.env.VITE_MAPA_LNG ?? -64.75),
-]
-const ZOOM_MAPA = Number(import.meta.env.VITE_MAPA_ZOOM ?? 14)
 
 const CAPAS = [
   { clave: 'servicios', etiqueta: 'Servicios', icono: 'herramienta' },
@@ -113,7 +103,7 @@ export default function MapaPage() {
       ) : (
         <>
           <div className="mapa-contenedor">
-            <MapContainer center={CENTRO_EL_NARANJO} zoom={ZOOM_MAPA} maxZoom={19} className="mapa">
+            <MapContainer center={CENTRO_EL_NARANJO} zoom={ZOOM_MAPA_DEFECTO} maxZoom={19} className="mapa">
               <TileLayer
                 key={capaBase}
                 attribution={CAPAS_BASE[capaBase].attribution}

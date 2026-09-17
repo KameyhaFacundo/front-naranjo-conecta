@@ -1,3 +1,18 @@
+// `??` no alcanza acá: si la variable de entorno queda cargada pero vacía
+// (pasó con VITE_MAPA_LAT en Vercel), el valor es "" — ni null ni
+// undefined, así que "" ?? default no cae al default y Number("") da 0.
+// Con eso el mapa termina centrado en [0, 0] y con zoom 0 (el mundo
+// entero). `||` sí lo cubre, porque "" también es falsy.
+function numEnv(valor, porDefecto) {
+  return Number(valor || porDefecto)
+}
+
+export const CENTRO_EL_NARANJO = [
+  numEnv(import.meta.env.VITE_MAPA_LAT, -26.4833),
+  numEnv(import.meta.env.VITE_MAPA_LNG, -64.75),
+]
+export const ZOOM_MAPA_DEFECTO = numEnv(import.meta.env.VITE_MAPA_ZOOM, 14)
+
 /**
  * Capas base del mapa. "Satélite" (fotografía aérea) es la que mejor
  * muestra las casas en un pueblo chico, donde OpenStreetMap muchas veces

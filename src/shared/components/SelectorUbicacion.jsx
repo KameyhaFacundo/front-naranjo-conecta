@@ -1,15 +1,10 @@
 import 'leaflet/dist/leaflet.css'
 import { useRef, useState } from 'react'
 import { MapContainer, Marker, TileLayer, useMap, useMapEvents } from 'react-leaflet'
-import { CAPAS_BASE } from '../../features/mapa/capasBase.js'
+import { CAPAS_BASE, CENTRO_EL_NARANJO } from '../../features/mapa/capasBase.js'
 import Icon from './Icon.jsx'
 
 const { url, attribution, maxZoom, maxNativeZoom } = CAPAS_BASE.satelite
-
-const CENTRO_EL_NARANJO = [
-  Number(import.meta.env.VITE_MAPA_LAT ?? -26.4833),
-  Number(import.meta.env.VITE_MAPA_LNG ?? -64.75),
-]
 
 // Redondeado a ~3 decimales (unos 100m) para que quede una ubicación
 // aproximada, nunca el domicilio exacto (ver notas de privacidad del README).

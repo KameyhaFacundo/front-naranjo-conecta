@@ -166,18 +166,6 @@ a:focus-visible {
   color: var(--papel);
 }
 
-.btn-emergencia.btn-inicio {
-  background: var(--papel);
-  color: var(--tierra);
-  border: 1px solid var(--borde);
-}
-
-.btn-emergencia.btn-inicio:hover {
-  background: var(--papel);
-  border-color: var(--naranja);
-  color: var(--naranja-quemado);
-}
-
 @media (max-width: 640px) {
   .btn-emergencia span {
     display: none;
@@ -188,18 +176,25 @@ a:focus-visible {
     height: 32px;
     padding: 0;
   }
+}
 
-  /* "Inicio" (login/registro) no es tan reconocible como el ícono de
-     alerta de Emergencias sin la palabra al lado, y ahí sobra lugar. */
-  .btn-emergencia.btn-inicio {
-    width: auto;
-    height: auto;
-    padding: 0.4rem 0.7rem;
-  }
+/* Login/registro: solo una flecha para volver, nada de logo ni marca. */
+.volver-flecha {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  color: var(--tierra);
+  font-size: 1.3rem;
+  text-decoration: none;
+  transition: background var(--transicion), color var(--transicion);
+}
 
-  .btn-emergencia.btn-inicio span {
-    display: inline;
-  }
+.volver-flecha:hover {
+  background: rgba(217, 114, 10, 0.08);
+  color: var(--naranja-quemado);
 }
 
 .header {
