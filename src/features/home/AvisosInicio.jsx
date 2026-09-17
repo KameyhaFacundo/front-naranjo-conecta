@@ -35,9 +35,16 @@ export default function AvisosInicio() {
       </div>
 
       <div className="avisos-inicio-lista">
-        {avisos.map((aviso) => (
+        {avisos.map((aviso, i) => (
           <article key={aviso.id} className="aviso-post">
-            {aviso.foto_url && <img className="aviso-post-foto" src={aviso.foto_url} alt="" />}
+            {aviso.foto_url && (
+              <img
+                className="aviso-post-foto"
+                src={aviso.foto_url}
+                alt=""
+                loading={i === 0 ? 'eager' : 'lazy'}
+              />
+            )}
             <div className="aviso-post-cuerpo">
               <div className="aviso-post-cabecera">
                 <span className="aviso-post-tag">

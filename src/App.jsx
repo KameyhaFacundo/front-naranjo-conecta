@@ -2,7 +2,9 @@ import { Navigate, Route, Routes } from 'react-router-dom'
 import AdminPage from './features/admin/AdminPage.jsx'
 import AvisosPage from './features/avisos/AvisosPage.jsx'
 import LoginPage from './features/auth/LoginPage.jsx'
+import OlvidePasswordPage from './features/auth/OlvidePasswordPage.jsx'
 import RegisterPage from './features/auth/RegisterPage.jsx'
+import RestablecerPasswordPage from './features/auth/RestablecerPasswordPage.jsx'
 import DetallePage from './features/detalle/DetallePage.jsx'
 import DirectorioPage from './features/directorio/DirectorioPage.jsx'
 import EmergenciasPage from './features/emergencias/EmergenciasPage.jsx'
@@ -63,6 +65,8 @@ export default function App() {
         />
         <Route path="ingresar" element={<LoginPage />} />
         <Route path="registrarme" element={<RegisterPage />} />
+        <Route path="olvide-password" element={<OlvidePasswordPage />} />
+        <Route path="restablecer-password" element={<RestablecerPasswordPage />} />
         <Route path="*" element={<InicioPage />} />
       </Route>
     </Routes>

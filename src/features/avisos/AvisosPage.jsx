@@ -44,7 +44,7 @@ export default function AvisosPage() {
         <ul className="lista-avisos">
           {items.map((aviso) => (
             <li key={aviso.id} className="aviso">
-              {aviso.foto_url && <img className="aviso-foto" src={aviso.foto_url} alt="" />}
+              {aviso.foto_url && <img className="aviso-foto" src={aviso.foto_url} alt="" loading="lazy" />}
               <span className="aviso-tipo">
                 <Icon name="megafono" size={15} /> {ETIQUETAS_TIPO_AVISO[aviso.tipo] ?? aviso.tipo}
               </span>

@@ -22,3 +22,11 @@ export function me() {
 export function actualizarPerfil(data) {
   return apiClient.put('/auth/perfil', data).then((res) => res.data.data ?? res.data)
 }
+
+export function olvidePassword(email) {
+  return apiClient.post('/auth/olvide-password', { email }).then((res) => res.data)
+}
+
+export function resetearPassword(data) {
+  return apiClient.post('/auth/resetear-password', data).then((res) => res.data)
+}

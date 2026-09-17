@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react'
 import { actualizarRecurso, eliminarRecurso } from '../../shared/api/recursos.js'
+import Estrellas from '../../shared/components/Estrellas.jsx'
 import FormularioModulo from '../../shared/components/FormularioModulo.jsx'
 import Icon from '../../shared/components/Icon.jsx'
 import ListaEstado from '../../shared/components/ListaEstado.jsx'
@@ -80,6 +81,13 @@ export default function MisPublicacionesPage() {
                       <strong>{tituloDe(item)}</strong>
                       {item.descripcion && <p>{item.descripcion}</p>}
                       <div className="mis-meta">
+                        {item.calificacion?.total > 0 && (
+                          <span className="mis-calificacion">
+                            <Estrellas valor={item.calificacion.promedio} size={14} />
+                            {item.calificacion.promedio} · {item.calificacion.total}{' '}
+                            {item.calificacion.total === 1 ? 'opinión' : 'opiniones'}
+                          </span>
+                        )}
                         {item.zona && (
                           <span>
                             <Icon name="pin" size={14} /> {item.zona}

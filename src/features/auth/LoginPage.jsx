@@ -33,6 +33,9 @@ export default function LoginPage() {
           <h1>Ingresar</h1>
           <p>Entrá para publicar y gestionar tus avisos.</p>
         </div>
+        {location.state?.recienRestablecida && (
+          <p className="formulario-exito">Tu contraseña se actualizó. Ya podés ingresar.</p>
+        )}
         {error && <p className="formulario-error">{error}</p>}
 
         <label>
@@ -53,6 +56,10 @@ export default function LoginPage() {
             required
           />
         </label>
+
+        <p className="formulario-olvide">
+          <Link to="/olvide-password">¿Olvidaste tu contraseña?</Link>
+        </p>
 
         <button type="submit" disabled={enviando}>
           {enviando ? 'Ingresando…' : 'Ingresar'}

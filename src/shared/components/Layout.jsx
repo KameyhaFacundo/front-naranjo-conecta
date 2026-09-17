@@ -16,7 +16,7 @@ const enlaces = [
   { to: '/emergencias', label: 'Emergencias', icono: 'alerta' },
 ]
 
-const RUTAS_AUTH = ['/ingresar', '/registrarme']
+const RUTAS_AUTH = ['/ingresar', '/registrarme', '/olvide-password', '/restablecer-password']
 
 export default function Layout() {
   const { user, logout } = useAuth()
