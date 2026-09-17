@@ -137,47 +137,6 @@ a:focus-visible {
   flex-direction: column;
 }
 
-.marca-fila {
-  display: flex;
-  align-items: center;
-  gap: 0.75rem;
-  min-width: 0;
-}
-
-.btn-emergencia {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  gap: 0.35rem;
-  flex-shrink: 0;
-  padding: 0.4rem 0.7rem;
-  border-radius: 999px;
-  background: rgba(179, 38, 30, 0.1);
-  color: var(--rojo-alerta);
-  text-decoration: none;
-  font-size: 0.82rem;
-  font-weight: 700;
-  box-shadow: none;
-  transition: background var(--transicion), color var(--transicion);
-}
-
-.btn-emergencia:hover {
-  background: var(--rojo-alerta);
-  color: var(--papel);
-}
-
-@media (max-width: 640px) {
-  .btn-emergencia span {
-    display: none;
-  }
-
-  .btn-emergencia {
-    width: 32px;
-    height: 32px;
-    padding: 0;
-  }
-}
-
 /* Login/registro: solo una flecha para volver, nada de logo ni marca. */
 .volver-flecha {
   display: inline-flex;

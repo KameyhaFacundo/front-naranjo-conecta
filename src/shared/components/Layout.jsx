@@ -13,6 +13,7 @@ const enlaces = [
   { to: '/reclamos', label: 'Reclamos', icono: 'alerta' },
   { to: '/instituciones', label: 'Instituciones', icono: 'edificio' },
   { to: '/avisos', label: 'Avisos', icono: 'megafono' },
+  { to: '/emergencias', label: 'Emergencias', icono: 'alerta' },
 ]
 
 const RUTAS_AUTH = ['/ingresar', '/registrarme']
@@ -43,16 +44,10 @@ export default function Layout() {
               ←
             </Link>
           ) : (
-            <div className="marca-fila">
-              <NavLink to="/" className="marca">
-                <NaranjaMark size={26} />
-                El Naranjo Conecta
-              </NavLink>
-
-              <Link to="/emergencias" className="btn-emergencia">
-                <Icon name="alerta" size={16} /> <span>Emergencias</span>
-              </Link>
-            </div>
+            <NavLink to="/" className="marca">
+              <NaranjaMark size={26} />
+              El Naranjo Conecta
+            </NavLink>
           )}
 
           {!enPaginaAuth && (
