@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import { NavLink, Outlet, useLocation } from 'react-router-dom'
+import { Link, NavLink, Outlet, useLocation } from 'react-router-dom'
 import { useAuth } from '../hooks/useAuth.jsx'
 import ErrorBoundary from './ErrorBoundary.jsx'
 import Icon from './Icon.jsx'
@@ -28,16 +28,18 @@ export default function Layout() {
 
   return (
     <div className="layout">
-      <a className="salto-emergencias" href="/emergencias">
-        <Icon name="alerta" size={16} /> Emergencias
-      </a>
-
       <header className="header">
         <div className="header-fila">
-          <NavLink to="/" className="marca">
-            <NaranjaMark size={26} />
-            El Naranjo Conecta
-          </NavLink>
+          <div className="marca-fila">
+            <NavLink to="/" className="marca">
+              <NaranjaMark size={26} />
+              El Naranjo Conecta
+            </NavLink>
+
+            <Link to="/emergencias" className="btn-emergencia">
+              <Icon name="alerta" size={16} /> <span>Emergencias</span>
+            </Link>
+          </div>
 
           <button
             type="button"
