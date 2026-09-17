@@ -1,0 +1,33 @@
+/*
+ * Tailwind CSS (v4) — se suma de forma gradual: los componentes nuevos
+ * pueden usar utilidades de Tailwind, y los existentes siguen con las
+ * clases de index.css.
+ *
+ * A propósito NO se importa el "preflight" (reset) de Tailwind, porque
+ * pisaría los estilos base que ya viven en index.css (por ejemplo, los
+ * tamaños de los <h1>/<h3>). Sí se exponen los colores y fuentes de la
+ * marca como utilidades: bg-naranja, text-tierra, border-borde, font-serif…
+ */
+@layer theme, components, utilities;
+@import 'tailwindcss/theme.css' layer(theme);
+@import 'tailwindcss/utilities.css' layer(utilities);
+
+/* Archivos que Tailwind escanea buscando clases. */
+@source '../';
+
+@theme {
+  --color-naranja: #d9720a;
+  --color-naranja-quemado: #a6540a;
+  --color-verde-hoja: #4b6b2f;
+  --color-verde-hoja-oscuro: #35501f;
+  --color-tierra: #2b2118;
+  --color-tierra-suave: #6e5d4b;
+  --color-arena: #faf3e6;
+  --color-papel: #fffcf6;
+  --color-borde: #e4d8c3;
+  --color-rojo-alerta: #b3261e;
+  --color-whatsapp: #1fae59;
+
+  --font-sans: 'Work Sans', system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+  --font-serif: 'Bitter', Georgia, serif;
+}
