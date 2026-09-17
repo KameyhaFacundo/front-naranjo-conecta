@@ -1,5 +1,6 @@
 import { Link } from 'react-router-dom'
 import Icon from '../../shared/components/Icon.jsx'
+import AvisosInicio from './AvisosInicio.jsx'
 import CarruselAvisos from './CarruselAvisos.jsx'
 
 const ACCESOS = [
@@ -25,6 +26,8 @@ export default function InicioPage() {
           </Link>
         ))}
       </div>
+
+      <AvisosInicio />
     </section>
   )
 }

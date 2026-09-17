@@ -7,6 +7,7 @@ import { useAuth } from '../../shared/hooks/useAuth.jsx'
 import { useListado } from '../../shared/hooks/useListado.js'
 import AvisoForm from './AvisoForm.jsx'
 import { listarAvisos } from './api.js'
+import { ETIQUETAS_TIPO_AVISO } from './tipos.js'
 
 export default function AvisosPage() {
   const { user } = useAuth()
@@ -43,8 +44,9 @@ export default function AvisosPage() {
         <ul className="lista-avisos">
           {items.map((aviso) => (
             <li key={aviso.id} className="aviso">
+              {aviso.foto_url && <img className="aviso-foto" src={aviso.foto_url} alt="" />}
               <span className="aviso-tipo">
-                <Icon name="megafono" size={15} /> {aviso.tipo}
+                <Icon name="megafono" size={15} /> {ETIQUETAS_TIPO_AVISO[aviso.tipo] ?? aviso.tipo}
               </span>
               <h3>{aviso.titulo}</h3>
               <p>{aviso.cuerpo}</p>

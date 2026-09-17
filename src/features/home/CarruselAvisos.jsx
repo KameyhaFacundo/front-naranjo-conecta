@@ -1,57 +1,25 @@
 import { useEffect, useMemo, useState } from 'react'
-import { Link } from 'react-router-dom'
 import Icon from '../../shared/components/Icon.jsx'
 import SelloCitrico from '../../shared/components/SelloCitrico.jsx'
-import { listarAvisos } from '../avisos/api.js'
 import { FOTOS_LOCALIDAD } from './fotosLocalidad.js'
-
-const ETIQUETAS_TIPO = {
-  comunicado: 'Comunicado',
-  reunion: 'Reunión',
-  evento: 'Evento',
-  obra: 'Obra',
-  corte_servicio: 'Corte de servicio',
-  actividad: 'Actividad',
-  otro: 'Aviso',
-}
 
 const INTERVALO_MS = 3000
 
 /**
- * Portada rotativa: mezcla fotos de El Naranjo (FOTOS_LOCALIDAD) con las
- * de los últimos avisos que tengan imagen. Si no hay ninguna de las dos
- * todavía, cae a un panel de marca (sello cítrico).
+ * Portada rotativa con fotos de El Naranjo (FOTOS_LOCALIDAD). Los avisos
+ * NO van acá — tienen su propia sección más abajo, tipo publicación, con
+ * foto, texto y fecha (ver AvisosInicio). Esto es solo la "foto de tapa".
+ * Si todavía no hay ninguna foto cargada, cae a un panel de marca.
  */
 export default function CarruselAvisos() {
-  const [avisosConFoto, setAvisosConFoto] = useState([])
-  const [cargando, setCargando] = useState(true)
   const [indice, setIndice] = useState(0)
 
-  useEffect(() => {
-    listarAvisos()
-      .then((data) => setAvisosConFoto((data.data ?? []).filter((a) => a.foto_url)))
-      .catch(() => setAvisosConFoto([]))
-      .finally(() => setCargando(false))
-  }, [])
-
   const slides = useMemo(() => {
-    const dePueblo = FOTOS_LOCALIDAD.map((src, i) => ({
-      id: `pueblo-${i}`,
-      tipo: 'pueblo',
-      src,
-    }))
-    const deAvisos = avisosConFoto.map((a) => ({
-      id: `aviso-${a.id}`,
-      tipo: 'aviso',
-      src: a.foto_url,
-      titulo: a.titulo,
-      etiqueta: ETIQUETAS_TIPO[a.tipo] ?? 'Aviso',
-    }))
+    const dePueblo = FOTOS_LOCALIDAD.map((src, i) => ({ id: `pueblo-${i}`, tipo: 'pueblo', src }))
     // El panel de marca siempre entra en la rotación (no solo cuando no hay
-    // nada más) hasta que haya suficientes fotos reales dando vueltas.
-    const deMarca = [{ id: 'marca', tipo: 'marca' }]
-    return [...dePueblo, ...deAvisos, ...deMarca]
-  }, [avisosConFoto])
+    // fotos) hasta que haya suficientes fotos reales dando vueltas.
+    return [...dePueblo, { id: 'marca', tipo: 'marca' }]
+  }, [])
 
   const total = slides.length
 
@@ -63,45 +31,29 @@ export default function CarruselAvisos() {
     return () => clearInterval(id)
   }, [total])
 
-  if (cargando) return null
-
   const actual = slides[indice % total]
-  const esAviso = actual.tipo === 'aviso'
   const esMarca = actual.tipo === 'marca'
-  const contenido = esMarca ? (
-    <>
-      <div className="carrusel-avisos-placeholder">
-        <SelloCitrico size={100} />
-      </div>
-      <div className="carrusel-avisos-texto">
-        <span className="carrusel-avisos-tag">
-          <Icon name="pin" size={14} /> El Naranjo
-        </span>
-        <h2>Burruyacú, Tucumán</h2>
-      </div>
-    </>
-  ) : (
-    <>
-      <img key={actual.id} className="carrusel-avisos-img" src={actual.src} alt={actual.titulo ?? 'El Naranjo'} />
-      <div className="carrusel-avisos-degrade" />
-      <div className="carrusel-avisos-texto">
-        <span className="carrusel-avisos-tag">
-          <Icon name={esAviso ? 'megafono' : 'pin'} size={14} /> {esAviso ? actual.etiqueta : 'El Naranjo'}
-        </span>
-        {actual.titulo && <h2>{actual.titulo}</h2>}
-      </div>
-    </>
-  )
 
   return (
     <div className={`carrusel-avisos ${esMarca ? 'carrusel-avisos-sin-foto' : ''}`}>
-      {esAviso ? (
-        <Link to="/avisos" className="carrusel-avisos-slide">
-          {contenido}
-        </Link>
-      ) : (
-        <div className="carrusel-avisos-slide">{contenido}</div>
-      )}
+      <div className="carrusel-avisos-slide">
+        {esMarca ? (
+          <div className="carrusel-avisos-placeholder">
+            <SelloCitrico size={100} />
+          </div>
+        ) : (
+          <>
+            <img key={actual.id} className="carrusel-avisos-img" src={actual.src} alt="El Naranjo" />
+            <div className="carrusel-avisos-degrade" />
+          </>
+        )}
+        <div className="carrusel-avisos-texto">
+          <span className="carrusel-avisos-tag">
+            <Icon name="pin" size={14} /> El Naranjo
+          </span>
+          <h2>Burruyacú, Tucumán</h2>
+        </div>
+      </div>
 
       {total > 1 && (
         <div className="carrusel-avisos-puntos">

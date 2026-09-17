@@ -1,8 +1,8 @@
 import { useState } from 'react'
 import CampoImagen from '../../shared/components/CampoImagen.jsx'
 import { crearAviso } from './api.js'
+import { TIPOS_AVISO } from './tipos.js'
 
-const TIPOS = ['comunicado', 'reunion', 'evento', 'obra', 'corte_servicio', 'actividad', 'otro']
 const vacio = { tipo: 'comunicado', titulo: '', cuerpo: '', fecha_evento: '', foto_url: '' }
 
 export default function AvisoForm({ onCreado }) {
@@ -37,9 +37,9 @@ export default function AvisoForm({ onCreado }) {
       <label>
         Tipo
         <select value={form.tipo} onChange={actualizarCampo('tipo')}>
-          {TIPOS.map((tipo) => (
-            <option key={tipo} value={tipo}>
-              {tipo}
+          {TIPOS_AVISO.map(([valor, texto]) => (
+            <option key={valor} value={valor}>
+              {texto}
             </option>
           ))}
         </select>
