@@ -11,6 +11,7 @@ import InicioPage from './features/home/InicioPage.jsx'
 import InstitucionesPage from './features/instituciones/InstitucionesPage.jsx'
 import MapaPage from './features/mapa/MapaPage.jsx'
 import MisPublicacionesPage from './features/mis/MisPublicacionesPage.jsx'
+import PerfilPage from './features/perfil/PerfilPage.jsx'
 import ReclamosPage from './features/reclamos/ReclamosPage.jsx'
 import Layout from './shared/components/Layout.jsx'
 import ProtectedRoute from './shared/components/ProtectedRoute.jsx'
@@ -41,6 +42,14 @@ export default function App() {
           element={
             <ProtectedRoute>
               <MisPublicacionesPage />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="perfil"
+          element={
+            <ProtectedRoute>
+              <PerfilPage />
             </ProtectedRoute>
           }
         />

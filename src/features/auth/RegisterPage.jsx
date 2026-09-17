@@ -2,14 +2,7 @@ import { useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import SelloCitrico from '../../shared/components/SelloCitrico.jsx'
 import { useAuth } from '../../shared/hooks/useAuth.jsx'
-
-const ROLES = [
-  ['vecino', 'Vecino'],
-  ['prestador', 'Prestador de servicios'],
-  ['comerciante', 'Comerciante'],
-  ['productor', 'Productor'],
-  ['empleador', 'Empleador'],
-]
+import { ROLES } from './roles.js'
 
 export default function RegisterPage() {
   const { register } = useAuth()

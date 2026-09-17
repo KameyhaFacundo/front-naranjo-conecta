@@ -296,8 +296,18 @@ a:focus-visible {
   white-space: nowrap;
 }
 
-.sesion > span {
+.sesion-nombre {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
   color: var(--tierra-suave);
+  text-decoration: none;
+  transition: color var(--transicion);
+}
+
+.sesion-nombre:hover,
+.sesion-nombre.active {
+  color: var(--naranja-quemado);
 }
 
 .sesion button {
@@ -848,6 +858,38 @@ a:focus-visible {
   color: var(--tierra-suave);
 }
 
+.whatsapp-flotante {
+  position: fixed;
+  right: 1.1rem;
+  bottom: 1.1rem;
+  z-index: 10;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #25c766, #1fae59 55%, #178a46);
+  color: var(--papel);
+  box-shadow: 0 10px 24px -10px rgba(31, 174, 89, 0.75);
+  text-decoration: none;
+  transition: transform var(--transicion), box-shadow var(--transicion);
+}
+
+.whatsapp-flotante:hover {
+  transform: translateY(-2px) scale(1.05);
+  box-shadow: 0 14px 30px -10px rgba(31, 174, 89, 0.85);
+}
+
+@media (max-width: 640px) {
+  .whatsapp-flotante {
+    right: 0.85rem;
+    bottom: calc(0.85rem + env(safe-area-inset-bottom));
+    width: 50px;
+    height: 50px;
+  }
+}
+
 .btn-whatsapp {
   display: inline-flex;
   align-items: center;
@@ -927,6 +969,34 @@ a:focus-visible {
 .formulario-error {
   color: var(--rojo-alerta);
   font-size: 0.88rem;
+}
+
+.formulario-exito {
+  color: var(--verde-hoja-oscuro);
+  font-size: 0.88rem;
+  font-weight: 600;
+}
+
+.formulario input:disabled {
+  background: var(--arena);
+  color: var(--tierra-suave);
+  cursor: not-allowed;
+}
+
+.perfil-password {
+  display: flex;
+  flex-direction: column;
+  gap: 0.7rem;
+  margin-top: 0.2rem;
+  padding-top: 1rem;
+  border-top: 1px dashed var(--borde);
+}
+
+.perfil-password-titulo {
+  margin: 0;
+  font-size: 0.88rem;
+  font-weight: 600;
+  color: var(--tierra-suave);
 }
 
 .pagina-auth {
@@ -2173,6 +2243,144 @@ a:focus-visible {
     margin-left: 0;
     flex-basis: 100%;
   }
+}
+
+/* Panel: resumen y usuarios */
+
+.pestañas-panel {
+  border-bottom: 1px solid var(--borde);
+  padding-bottom: 0.9rem;
+  margin-bottom: 1.5rem;
+}
+
+.pestañas-panel button {
+  font-size: 0.95rem;
+  padding: 0.55rem 1rem;
+}
+
+.barra-acciones select {
+  width: auto;
+  background: var(--papel);
+  box-shadow: var(--sombra-suave);
+}
+
+.resumen {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+.resumen section h2 {
+  font-size: 1.25rem;
+  margin: 0 0 1rem;
+}
+
+.resumen-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 0.9rem;
+}
+
+.resumen-card {
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+  background: var(--grad-panel);
+  border: 1px solid var(--borde);
+  border-radius: var(--radio);
+  padding: 1rem 1.1rem;
+  box-shadow: var(--sombra-suave);
+}
+
+.resumen-card-valor {
+  font-family: 'Bitter', Georgia, serif;
+  font-size: 1.9rem;
+  font-weight: 700;
+  line-height: 1;
+  color: var(--naranja-quemado);
+}
+
+.resumen-card-titulo {
+  font-size: 0.85rem;
+  color: var(--tierra-suave);
+  font-weight: 600;
+}
+
+.resumen-desglose {
+  list-style: none;
+  margin: 1rem 0 0;
+  padding: 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.resumen-desglose li {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  background: var(--papel);
+  border: 1px solid var(--borde);
+  border-radius: 999px;
+  padding: 0.3rem 0.8rem;
+  font-size: 0.85rem;
+  color: var(--tierra-suave);
+}
+
+.resumen-desglose strong {
+  color: var(--tierra);
+}
+
+.texto-suave {
+  color: var(--tierra-suave);
+  font-size: 0.85rem;
+}
+
+.usuario-detalle h3 {
+  margin: 0 0 0.75rem;
+}
+
+.usuario-datos {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+  gap: 0.75rem;
+  margin: 0 0 1.5rem;
+}
+
+.usuario-datos dt {
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--tierra-suave);
+}
+
+.usuario-datos dd {
+  margin: 0.15rem 0 0;
+  font-weight: 600;
+}
+
+.usuario-detalle h4 {
+  margin: 0 0 0.75rem;
+  font-size: 1.05rem;
+}
+
+.usuario-publicaciones {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.usuario-publicaciones-titulo {
+  margin: 0 0 0.35rem;
+  font-weight: 600;
+}
+
+.usuario-publicaciones ul {
+  margin: 0;
+  padding-left: 1.1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
 }
 
 /* Animaciones suaves (respetan "reducir movimiento" del sistema) */

@@ -1,5 +1,6 @@
 import { Link } from 'react-router-dom'
 import Icon from '../../shared/components/Icon.jsx'
+import WhatsappFlotante from '../../shared/components/WhatsappFlotante.jsx'
 import AvisosInicio from './AvisosInicio.jsx'
 import CarruselAvisos from './CarruselAvisos.jsx'
 
@@ -28,6 +29,7 @@ export default function InicioPage() {
       </div>
 
       <AvisosInicio />
+      <WhatsappFlotante />
     </section>
   )
 }

@@ -71,7 +71,9 @@ export default function Layout() {
             <div className={`sesion ${menuAbierto ? 'sesion-abierta' : ''}`}>
               {user ? (
                 <>
-                  <span>{user.nombre}</span>
+                  <NavLink to="/perfil" className="sesion-nombre">
+                    <Icon name="usuario" size={15} /> {user.nombre}
+                  </NavLink>
                   <button type="button" onClick={logout}>
                     Salir
                   </button>
@@ -103,6 +105,12 @@ export default function Layout() {
               <NavLink to="/mis-publicaciones">
                 <Icon name="lista" size={17} />
                 Mis publicaciones
+              </NavLink>
+            )}
+            {user && (
+              <NavLink to="/perfil">
+                <Icon name="usuario" size={17} />
+                Mi perfil
               </NavLink>
             )}
             {user?.rol === 'admin' && (

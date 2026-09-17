@@ -13,5 +13,12 @@ export function logout() {
 }
 
 export function me() {
-  return apiClient.get('/auth/me').then((res) => res.data)
+  // AuthController::me() devuelve el UserResource directo, así que Laravel
+  // lo envuelve en {data: ...} (a diferencia de login/register, que arman
+  // la respuesta a mano). Mismo desenvuelto que se usa en detalle/api.js.
+  return apiClient.get('/auth/me').then((res) => res.data.data ?? res.data)
+}
+
+export function actualizarPerfil(data) {
+  return apiClient.put('/auth/perfil', data).then((res) => res.data.data ?? res.data)
 }
