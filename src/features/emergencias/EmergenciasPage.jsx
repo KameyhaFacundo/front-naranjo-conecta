@@ -4,13 +4,11 @@ import Icon from '../../shared/components/Icon.jsx'
 // proyecto, sección Emergencias) para que sea rápido de usar desde el celular.
 // El teléfono del centro de salud se carga por .env (VITE_TEL_CENTRO_SALUD);
 // si queda vacío, se muestra "a completar".
-const CENTRO_SALUD = import.meta.env.VITE_TEL_CENTRO_SALUD ?? ''
 
 const CONTACTOS = [
   { nombre: 'Policía', numero: '911' },
   { nombre: 'Ambulancia / SAME', numero: '107' },
   { nombre: 'Bomberos', numero: '100' },
-  { nombre: 'Centro de salud de El Naranjo', numero: CENTRO_SALUD },
 ]
 
 export default function EmergenciasPage() {

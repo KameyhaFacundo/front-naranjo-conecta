@@ -8,9 +8,7 @@ import NaranjaMark from './NaranjaMark.jsx'
 const enlaces = [
   { to: '/', label: 'Inicio', fin: true, icono: 'pin' },
   { to: '/mapa', label: 'Mapa', icono: 'mapa' },
-  { to: '/servicios', label: 'Servicios', icono: 'herramienta' },
-  { to: '/comercios', label: 'Comercios', icono: 'tienda' },
-  { to: '/productores', label: 'Productores', icono: 'hoja' },
+  { to: '/directorio', label: 'Servicios y Comercios', icono: 'tienda' },
   { to: '/empleos', label: 'Empleo', icono: 'maletin' },
   { to: '/reclamos', label: 'Reclamos', icono: 'alerta' },
   { to: '/instituciones', label: 'Instituciones', icono: 'edificio' },

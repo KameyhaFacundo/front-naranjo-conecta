@@ -7,4 +7,4 @@
  *   '/images/plaza.jpg',
  *   '/images/iglesia.jpg',
  */
-export const FOTOS_LOCALIDAD = []
+export const FOTOS_LOCALIDAD = ['/images/cartel-entrada.png']

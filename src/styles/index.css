@@ -329,88 +329,16 @@ a:focus-visible {
 
 /* Inicio */
 
-.hero {
-  position: relative;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 2.5rem;
-  padding: 3rem 2.75rem;
-  margin: 0.5rem 0 2.5rem;
-  border-radius: var(--radio-grande);
-  border: 1px solid var(--borde);
-  background:
-    radial-gradient(760px 380px at 90% -25%, rgba(242, 161, 60, 0.4), transparent 62%),
-    radial-gradient(620px 340px at -12% 125%, rgba(75, 107, 47, 0.16), transparent 60%),
-    var(--grad-panel);
-  box-shadow: var(--sombra-media);
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
   overflow: hidden;
-  animation: subir 420ms cubic-bezier(0.2, 0.7, 0.3, 1) both;
-}
-
-.hero-texto {
-  flex: 1 1 auto;
-  min-width: 0;
-  max-width: 540px;
-}
-
-.hero-eyebrow {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.4rem;
-  padding: 0.35rem 0.75rem;
-  margin-bottom: 1.1rem;
-  border-radius: 999px;
-  background: rgba(75, 107, 47, 0.12);
-  color: var(--verde-hoja-oscuro);
-  font-size: 0.8rem;
-  font-weight: 600;
-}
-
-.hero h1 {
-  font-size: clamp(2rem, 4.5vw, 3.1rem);
-  color: var(--tierra);
-  margin: 0 0 0.9rem;
-}
-
-.hero-sub {
-  margin: 0 0 1.6rem;
-  font-size: 1.08rem;
-  color: var(--tierra-suave);
-  max-width: 46ch;
-}
-
-.hero-cta {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.75rem;
-}
-
-.hero-cta .btn,
-.hero-cta .btn-fantasma {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.45rem;
-  text-decoration: none;
-}
-
-.btn-fantasma {
-  background: var(--papel);
-  color: var(--tierra);
-  border: 1px solid var(--borde);
-  border-radius: var(--radio-chico);
-  padding: 0.68rem 1.15rem;
-  font-weight: 600;
-  font-size: 0.95rem;
-  transition: transform var(--transicion), box-shadow var(--transicion), border-color var(--transicion),
-    color var(--transicion);
-}
-
-.btn-fantasma:hover {
-  transform: translateY(-1px);
-  border-color: var(--naranja);
-  color: var(--naranja-quemado);
-  box-shadow: var(--sombra-suave);
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
 }
 
 .sello-citrico {
@@ -472,16 +400,6 @@ a:focus-visible {
   transform: translateY(-2px);
   border-color: rgba(217, 114, 10, 0.35);
   color: var(--naranja-quemado);
-}
-
-@media (max-width: 640px) {
-  .hero {
-    flex-direction: column-reverse;
-    align-items: flex-start;
-    text-align: left;
-    padding: 2rem 1.4rem;
-    gap: 1.25rem;
-  }
 }
 
 /* Portada rotativa de avisos (o foto del pueblo si todavía no hay) */
@@ -654,6 +572,17 @@ a:focus-visible {
 
 .barra-acciones .pestañas {
   margin-bottom: 0;
+}
+
+.directorio-publicar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.directorio-publicar .btn-secundario {
+  padding: 0.55rem 0.85rem;
+  font-size: 0.85rem;
 }
 
 .pestañas {
@@ -1845,10 +1774,6 @@ a:focus-visible {
 
   .nav a.active {
     background: rgba(217, 114, 10, 0.08);
-  }
-
-  .hero {
-    padding: 1.6rem 1.25rem;
   }
 
   .seccion-header h1 {

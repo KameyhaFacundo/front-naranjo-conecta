@@ -35,9 +35,11 @@ export default function DetallePage({ moduloKey }) {
   const titulo = item ? (item[config.tituloKey] ?? item.titulo ?? item.nombre ?? item.categoria) : ''
   const imagen = config.imagen ? item?.[config.imagen] : null
 
+  const rutaLista = CALIFICABLES.includes(moduloKey) ? `/directorio?tipo=${moduloKey}` : `/${moduloKey}`
+
   return (
     <section className="detalle">
-      <Link to={`/${moduloKey}`} className="detalle-volver">
+      <Link to={rutaLista} className="detalle-volver">
         ← Volver a {modulo.label}
       </Link>
 

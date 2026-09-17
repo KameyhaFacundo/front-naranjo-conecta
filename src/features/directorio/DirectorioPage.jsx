@@ -16,6 +16,7 @@ export const TIPOS_DIRECTORIO = [
   {
     clave: 'servicios',
     etiqueta: 'Servicios',
+    etiquetaBoton: 'Servicio',
     icono: 'herramienta',
     listar: listarServicios,
     Form: ServicioForm,
@@ -34,6 +35,7 @@ export const TIPOS_DIRECTORIO = [
   {
     clave: 'comercios',
     etiqueta: 'Comercios',
+    etiquetaBoton: 'Comercio',
     icono: 'tienda',
     listar: listarComercios,
     Form: ComercioForm,
@@ -51,6 +53,7 @@ export const TIPOS_DIRECTORIO = [
   {
     clave: 'productores',
     etiqueta: 'Productores',
+    etiquetaBoton: 'Productor',
     icono: 'hoja',
     listar: listarProductores,
     Form: ProductorForm,
@@ -158,7 +161,7 @@ export default function DirectorioPage() {
                 className="btn-secundario"
                 onClick={() => setFormAbierto(t.clave)}
               >
-                <Icon name={t.icono} size={15} /> {t.etiqueta.replace(/s$/, '')}
+                <Icon name={t.icono} size={15} /> {t.etiquetaBoton}
               </button>
             ))}
           </div>
