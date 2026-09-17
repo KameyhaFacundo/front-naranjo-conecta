@@ -47,7 +47,10 @@ export default function CarruselAvisos() {
       titulo: a.titulo,
       etiqueta: ETIQUETAS_TIPO[a.tipo] ?? 'Aviso',
     }))
-    return [...dePueblo, ...deAvisos]
+    // El panel de marca siempre entra en la rotación (no solo cuando no hay
+    // nada más) hasta que haya suficientes fotos reales dando vueltas.
+    const deMarca = [{ id: 'marca', tipo: 'marca' }]
+    return [...dePueblo, ...deAvisos, ...deMarca]
   }, [avisosConFoto])
 
   const total = slides.length
@@ -62,25 +65,22 @@ export default function CarruselAvisos() {
 
   if (cargando) return null
 
-  if (total === 0) {
-    return (
-      <div className="carrusel-avisos carrusel-avisos-sin-foto">
-        <div className="carrusel-avisos-placeholder">
-          <SelloCitrico size={100} />
-        </div>
-        <div className="carrusel-avisos-texto">
-          <span className="carrusel-avisos-tag">
-            <Icon name="pin" size={14} /> El Naranjo
-          </span>
-          <h2>Burruyacú, Tucumán</h2>
-        </div>
-      </div>
-    )
-  }
-
   const actual = slides[indice % total]
   const esAviso = actual.tipo === 'aviso'
-  const contenido = (
+  const esMarca = actual.tipo === 'marca'
+  const contenido = esMarca ? (
+    <>
+      <div className="carrusel-avisos-placeholder">
+        <SelloCitrico size={100} />
+      </div>
+      <div className="carrusel-avisos-texto">
+        <span className="carrusel-avisos-tag">
+          <Icon name="pin" size={14} /> El Naranjo
+        </span>
+        <h2>Burruyacú, Tucumán</h2>
+      </div>
+    </>
+  ) : (
     <>
       <img key={actual.id} className="carrusel-avisos-img" src={actual.src} alt={actual.titulo ?? 'El Naranjo'} />
       <div className="carrusel-avisos-degrade" />
@@ -94,7 +94,7 @@ export default function CarruselAvisos() {
   )
 
   return (
-    <div className="carrusel-avisos">
+    <div className={`carrusel-avisos ${esMarca ? 'carrusel-avisos-sin-foto' : ''}`}>
       {esAviso ? (
         <Link to="/avisos" className="carrusel-avisos-slide">
           {contenido}
