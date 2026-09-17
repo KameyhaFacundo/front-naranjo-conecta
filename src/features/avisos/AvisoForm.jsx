@@ -1,8 +1,9 @@
 import { useState } from 'react'
+import CampoImagen from '../../shared/components/CampoImagen.jsx'
 import { crearAviso } from './api.js'
 
 const TIPOS = ['comunicado', 'reunion', 'evento', 'obra', 'corte_servicio', 'actividad', 'otro']
-const vacio = { tipo: 'comunicado', titulo: '', cuerpo: '', fecha_evento: '' }
+const vacio = { tipo: 'comunicado', titulo: '', cuerpo: '', fecha_evento: '', foto_url: '' }
 
 export default function AvisoForm({ onCreado }) {
   const [form, setForm] = useState(vacio)
@@ -55,6 +56,11 @@ export default function AvisoForm({ onCreado }) {
         Fecha del evento (opcional)
         <input type="datetime-local" value={form.fecha_evento} onChange={actualizarCampo('fecha_evento')} />
       </label>
+      <CampoImagen
+        label="Foto (opcional, se muestra en la portada)"
+        valor={form.foto_url}
+        onChange={(url) => setForm((prev) => ({ ...prev, foto_url: url }))}
+      />
 
       <button type="submit" disabled={enviando}>
         {enviando ? 'Publicando…' : 'Publicar'}

@@ -1,3 +1,4 @@
+import { useEffect, useState } from 'react'
 import { NavLink, Outlet, useLocation } from 'react-router-dom'
 import { useAuth } from '../hooks/useAuth.jsx'
 import ErrorBoundary from './ErrorBoundary.jsx'
@@ -19,6 +20,11 @@ const enlaces = [
 export default function Layout() {
   const { user, logout } = useAuth()
   const location = useLocation()
+  const [menuAbierto, setMenuAbierto] = useState(false)
+
+  useEffect(() => {
+    setMenuAbierto(false)
+  }, [location.pathname])
 
   return (
     <div className="layout">
@@ -33,7 +39,17 @@ export default function Layout() {
             El Naranjo Conecta
           </NavLink>
 
-          <div className="sesion">
+          <button
+            type="button"
+            className="btn-menu"
+            onClick={() => setMenuAbierto((v) => !v)}
+            aria-expanded={menuAbierto}
+            aria-label={menuAbierto ? 'Cerrar menú' : 'Abrir menú'}
+          >
+            <Icon name={menuAbierto ? 'cerrar' : 'menu'} size={22} />
+          </button>
+
+          <div className={`sesion ${menuAbierto ? 'sesion-abierta' : ''}`}>
             {user ? (
               <>
                 <span>{user.nombre}</span>
@@ -52,7 +68,7 @@ export default function Layout() {
           </div>
         </div>
 
-        <nav className="nav">
+        <nav className={`nav ${menuAbierto ? 'nav-abierta' : ''}`}>
           {enlaces.map((enlace) => (
             <NavLink key={enlace.to} to={enlace.to} end={enlace.fin}>
               <Icon name={enlace.icono} size={17} />

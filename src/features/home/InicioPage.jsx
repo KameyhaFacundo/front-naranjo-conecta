@@ -1,6 +1,7 @@
 import { Link } from 'react-router-dom'
 import Icon from '../../shared/components/Icon.jsx'
 import SelloCitrico from '../../shared/components/SelloCitrico.jsx'
+import CarruselAvisos from './CarruselAvisos.jsx'
 
 const ACCESOS = [
   { to: '/mapa', icono: 'mapa', titulo: 'Mapa', texto: 'Comercios, servicios, instituciones y reclamos cerca tuyo.' },
@@ -33,6 +34,8 @@ export default function InicioPage() {
         </div>
         <SelloCitrico />
       </header>
+
+      <CarruselAvisos />
 
       <div className="accesos">
         {ACCESOS.map((acceso) => (

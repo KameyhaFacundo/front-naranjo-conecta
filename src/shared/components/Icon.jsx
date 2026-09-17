@@ -79,6 +79,13 @@ const TRAZOS = {
       <path d="m9.3 12.2 1.9 1.9 3.6-3.9" />
     </>
   ),
+  menu: (
+    <>
+      <path d="M4 6.5h16" />
+      <path d="M4 12h16" />
+      <path d="M4 17.5h16" />
+    </>
+  ),
   cerrar: (
     <>
       <path d="M6 6l12 12" />

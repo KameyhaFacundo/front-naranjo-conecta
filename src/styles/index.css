@@ -183,6 +183,25 @@ a:focus-visible {
   white-space: nowrap;
 }
 
+.btn-menu {
+  display: none;
+  align-items: center;
+  justify-content: center;
+  width: 38px;
+  height: 38px;
+  padding: 0;
+  background: none;
+  border: 1px solid transparent;
+  box-shadow: none;
+  color: var(--tierra);
+  border-radius: var(--radio-chico);
+}
+
+.btn-menu:hover {
+  background: rgba(217, 114, 10, 0.08);
+  border-color: transparent;
+}
+
 .nav {
   display: flex;
   gap: 0.3rem;
@@ -481,11 +500,128 @@ a:focus-visible {
     padding: 2rem 1.4rem;
     gap: 1.25rem;
   }
+}
 
-  .rama-citrica {
-    width: 200px;
-    max-width: 60vw;
-    align-self: center;
+/* Portada rotativa de avisos (o foto del pueblo si todavía no hay) */
+.carrusel-avisos {
+  position: relative;
+  height: clamp(200px, 32vw, 320px);
+  margin-bottom: 2.5rem;
+  border-radius: var(--radio-grande);
+  overflow: hidden;
+  box-shadow: var(--sombra-media);
+  border: 1px solid var(--borde);
+  background: var(--grad-panel);
+}
+
+.carrusel-avisos-slide {
+  display: block;
+  position: absolute;
+  inset: 0;
+  text-decoration: none;
+  color: inherit;
+}
+
+.carrusel-avisos-img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  animation: aparecer 500ms ease both;
+}
+
+.carrusel-avisos-degrade {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to top, rgba(30, 21, 12, 0.78) 0%, rgba(30, 21, 12, 0.15) 55%, transparent 80%);
+}
+
+.carrusel-avisos-placeholder {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background:
+    radial-gradient(640px 360px at 15% 0%, rgba(242, 161, 60, 0.35), transparent 65%),
+    radial-gradient(520px 320px at 100% 100%, rgba(75, 107, 47, 0.16), transparent 60%),
+    var(--grad-panel);
+}
+
+.carrusel-avisos-texto {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  padding: 1.5rem 1.5rem 1.35rem;
+  color: var(--papel);
+}
+
+.carrusel-avisos-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  margin-bottom: 0.5rem;
+  padding: 0.3rem 0.7rem;
+  border-radius: 999px;
+  background: rgba(255, 252, 246, 0.18);
+  backdrop-filter: blur(6px);
+  font-size: 0.78rem;
+  font-weight: 600;
+}
+
+.carrusel-avisos-texto h2 {
+  margin: 0;
+  font-size: clamp(1.15rem, 3vw, 1.55rem);
+  text-shadow: 0 2px 10px rgba(0, 0, 0, 0.35);
+}
+
+.carrusel-avisos-sin-foto .carrusel-avisos-texto {
+  color: var(--tierra);
+}
+
+.carrusel-avisos-sin-foto .carrusel-avisos-tag {
+  background: rgba(75, 107, 47, 0.14);
+  color: var(--verde-hoja-oscuro);
+}
+
+.carrusel-avisos-sin-foto .carrusel-avisos-degrade {
+  display: none;
+}
+
+.carrusel-avisos-puntos {
+  position: absolute;
+  right: 1.25rem;
+  bottom: 1.35rem;
+  z-index: 1;
+  display: flex;
+  gap: 0.4rem;
+}
+
+.carrusel-avisos-puntos button {
+  width: 8px;
+  height: 8px;
+  padding: 0;
+  border: none;
+  border-radius: 999px;
+  background: rgba(255, 252, 246, 0.5);
+  box-shadow: none;
+}
+
+.carrusel-avisos-puntos button:hover {
+  transform: none;
+}
+
+.carrusel-avisos-puntos button.activo {
+  width: 20px;
+  background: var(--papel);
+}
+
+@media (max-width: 640px) {
+  .carrusel-avisos-puntos {
+    right: 1rem;
+    bottom: 1rem;
   }
 }
 
@@ -691,7 +827,8 @@ a:focus-visible {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  gap: 0.4rem;
+  align-self: flex-start;
+  gap: 0.35rem;
   margin-top: auto;
   background: linear-gradient(135deg, #25c766, #1fae59 55%, #178a46);
   border: none;
@@ -699,8 +836,8 @@ a:focus-visible {
   text-decoration: none;
   text-align: center;
   border-radius: var(--radio-chico);
-  padding: 0.6rem;
-  font-size: 0.9rem;
+  padding: 0.5rem 0.85rem;
+  font-size: 0.82rem;
   font-weight: 600;
   box-shadow: 0 8px 18px -12px rgba(31, 174, 89, 0.9);
   transition: transform var(--transicion), filter var(--transicion), box-shadow var(--transicion);
@@ -1646,24 +1783,86 @@ a:focus-visible {
 
   .header-fila {
     flex-wrap: wrap;
-    gap: 0.4rem 0.6rem;
   }
 
   .marca {
     font-size: 1rem;
   }
 
-  /* Acciones de sesión compactas y pegadas a la derecha: en pantallas
-     chicas entran en la misma fila que la marca o, si bajan, quedan
-     alineadas a la derecha en vez de colgando a la izquierda. */
+  /* Menú hamburguesa: en el teléfono el nav y la sesión ocupan su propia
+     fila y quedaban amontonados con la marca. Ahora se esconden atrás
+     de un botón y se despliegan como panel a pantalla completa. */
+  .btn-menu {
+    display: inline-flex;
+  }
+
   .sesion {
-    margin-left: auto;
+    display: none;
+    width: 100%;
+    flex-direction: column;
+    align-items: stretch;
     gap: 0.5rem;
+    order: 3;
+    padding-top: 0.75rem;
+    margin-top: 0.25rem;
+    border-top: 1px solid var(--borde);
+  }
+
+  .sesion-abierta {
+    display: flex;
+  }
+
+  .sesion button,
+  .sesion a {
+    width: 100%;
+    text-align: center;
+  }
+
+  .sesion a:not(.btn-registrarme) {
+    padding: 0.6rem 0.9rem;
+    border: 1px solid var(--borde);
+    border-radius: var(--radio-chico);
+    color: var(--tierra);
+    font-weight: 600;
+  }
+
+  .sesion > span {
+    color: var(--tierra-suave);
+    font-weight: 600;
+    padding: 0.2rem 0;
   }
 
   .btn-registrarme {
-    padding: 0.42rem 0.75rem;
-    font-size: 0.85rem;
+    padding: 0.65rem 0.9rem;
+    font-size: 0.9rem;
+  }
+
+  .nav {
+    display: none;
+    flex-direction: column;
+    gap: 0;
+    overflow: visible;
+    padding: 0.3rem 0 0.6rem;
+  }
+
+  .nav-abierta {
+    display: flex;
+  }
+
+  .nav a {
+    width: 100%;
+    padding: 0.75rem 0.4rem;
+    border: none;
+    border-bottom: 1px solid var(--borde);
+    border-radius: 0;
+  }
+
+  .nav a:last-child {
+    border-bottom: none;
+  }
+
+  .nav a.active {
+    background: rgba(217, 114, 10, 0.08);
   }
 
   .hero {
@@ -1682,7 +1881,7 @@ a:focus-visible {
   }
 
   .btn-whatsapp {
-    padding: 0.7rem;
+    padding: 0.6rem 0.9rem;
   }
 
   /* Reclamo: texto arriba, estado abajo */

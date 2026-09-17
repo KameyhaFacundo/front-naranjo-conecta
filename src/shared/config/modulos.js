@@ -172,6 +172,7 @@ export const MODULOS = [
     rutaLista: '/admin/avisos',
     rutaItem: '/avisos',
     crear: true,
+    imagen: 'foto_url',
     columnas: [
       { campo: 'titulo', label: 'Título' },
       { campo: 'tipo', label: 'Tipo' },
@@ -188,6 +189,7 @@ export const MODULOS = [
       { name: 'titulo', label: 'Título', requerido: true },
       { name: 'cuerpo', label: 'Texto', tipo: 'textarea', requerido: true },
       { name: 'fecha_evento', label: 'Fecha del evento (opcional)', tipo: 'datetime-local' },
+      { name: 'foto_url', label: 'Foto (opcional)', tipo: 'imagen' },
     ],
   },
 ]
