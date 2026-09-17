@@ -28,3 +28,13 @@ export function iconoDeCapa(clave) {
 export function colorDeCapa(clave) {
   return COLOR_POR_CAPA[clave] ?? 'var(--tierra-suave)'
 }
+
+/** Punto azul "estás acá", como en Google Maps: distinto del resto de los pines. */
+export function iconoMiUbicacion() {
+  return L.divIcon({
+    html: '<span class="mi-ubicacion-halo"></span><span class="mi-ubicacion-punto"></span>',
+    className: 'mi-ubicacion-marcador',
+    iconSize: [18, 18],
+    iconAnchor: [9, 9],
+  })
+}

@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import CampoImagen from '../../shared/components/CampoImagen.jsx'
+import SelectorUbicacion from '../../shared/components/SelectorUbicacion.jsx'
 import { crearReclamo } from './api.js'
 
 const CATEGORIAS = [
@@ -13,7 +14,7 @@ const CATEGORIAS = [
   ['otro', 'Otro'],
 ]
 
-const vacio = { categoria: 'alumbrado', descripcion: '', zona: '', foto_url: '' }
+const vacio = { categoria: 'alumbrado', descripcion: '', zona: '', foto_url: '', lat: null, lng: null }
 
 export default function ReclamoForm({ onCreado }) {
   const [form, setForm] = useState(vacio)
@@ -66,6 +67,11 @@ export default function ReclamoForm({ onCreado }) {
         label="Foto del problema (opcional)"
         valor={form.foto_url}
         onChange={(url) => setForm((prev) => ({ ...prev, foto_url: url }))}
+      />
+      <SelectorUbicacion
+        lat={form.lat}
+        lng={form.lng}
+        onChange={(lat, lng) => setForm((prev) => ({ ...prev, lat, lng }))}
       />
 
       <button type="submit" disabled={enviando}>

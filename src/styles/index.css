@@ -12,6 +12,7 @@
   --borde: #e4d8c3;
   --rojo-alerta: #b3261e;
   --whatsapp: #1fae59;
+  --amarillo-sol: #f4b942;
 
   --grad-naranja: linear-gradient(135deg, #ee9422 0%, #d9720a 55%, #a6540a 100%);
   --grad-panel: linear-gradient(150deg, #fffdf9 0%, #fdf5e7 100%);
@@ -366,10 +367,32 @@ a:focus-visible {
   box-shadow: var(--sombra-suave);
 }
 
-.rama-citrica {
-  width: clamp(150px, 26vw, 300px);
+.sello-citrico {
+  width: clamp(160px, 24vw, 240px);
+  height: auto;
   flex-shrink: 0;
-  filter: drop-shadow(0 16px 24px rgba(43, 33, 24, 0.12));
+  filter: drop-shadow(0 16px 24px rgba(43, 33, 24, 0.16));
+  animation: sello-entrada 640ms 120ms cubic-bezier(0.2, 0.7, 0.3, 1) both;
+}
+
+.sello-citrico-texto {
+  font-family: 'Work Sans', system-ui, sans-serif;
+  font-size: 9.5px;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  fill: var(--naranja-quemado);
+}
+
+@keyframes sello-entrada {
+  from {
+    opacity: 0;
+    transform: scale(0.88) rotate(-6deg);
+  }
+
+  to {
+    opacity: 1;
+    transform: scale(1) rotate(0deg);
+  }
 }
 
 .accesos {
@@ -866,6 +889,10 @@ a:focus-visible {
   width: auto;
 }
 
+.mapa-contenedor {
+  position: relative;
+}
+
 .mapa {
   height: 60vh;
   min-height: 320px;
@@ -873,6 +900,103 @@ a:focus-visible {
   border: 1px solid var(--borde);
   overflow: hidden;
   box-shadow: var(--sombra-suave);
+}
+
+.btn-ubicarme {
+  position: absolute;
+  right: 0.85rem;
+  bottom: 0.85rem;
+  z-index: 500;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 42px;
+  height: 42px;
+  padding: 0;
+  border-radius: 50%;
+  background: var(--papel);
+  color: var(--naranja-quemado);
+  border: 1px solid var(--borde);
+  box-shadow: var(--sombra-media);
+}
+
+.btn-ubicarme:hover {
+  border-color: var(--naranja);
+}
+
+.btn-ubicarme:disabled {
+  color: var(--tierra-suave);
+}
+
+.mi-ubicacion-marcador {
+  background: none;
+  border: none;
+}
+
+.mi-ubicacion-punto {
+  position: absolute;
+  inset: 3px;
+  border-radius: 50%;
+  background: #2b7de9;
+  border: 2.5px solid #fff;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.35);
+}
+
+.mi-ubicacion-halo {
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  background: rgba(43, 125, 233, 0.3);
+  animation: mi-ubicacion-pulso 2.2s ease-out infinite;
+}
+
+@keyframes mi-ubicacion-pulso {
+  from {
+    transform: scale(0.6);
+    opacity: 0.8;
+  }
+
+  to {
+    transform: scale(2.6);
+    opacity: 0;
+  }
+}
+
+.selector-ubicacion {
+  margin-bottom: 0.3rem;
+}
+
+.selector-ubicacion-cabecera {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.6rem;
+  margin-bottom: 0.5rem;
+  font-size: 0.88rem;
+  color: var(--tierra-suave);
+}
+
+.selector-ubicacion-cabecera .btn-secundario {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  flex-shrink: 0;
+  padding: 0.45rem 0.8rem;
+  font-size: 0.85rem;
+}
+
+.selector-ubicacion-mapa {
+  height: 200px;
+  border-radius: var(--radio-chico);
+  border: 1px solid var(--borde);
+  cursor: crosshair;
+}
+
+.selector-ubicacion-nota {
+  margin: 0.5rem 0 0;
+  font-size: 0.82rem;
+  color: var(--tierra-suave);
 }
 
 .marcador-mapa {
@@ -1459,6 +1583,25 @@ a:focus-visible {
   white-space: pre-line;
 }
 
+.detalle-mapa {
+  margin-bottom: 1.5rem;
+}
+
+.detalle-mapa-lienzo {
+  height: 220px;
+  border-radius: var(--radio);
+  border: 1px solid var(--borde);
+  box-shadow: var(--sombra-suave);
+  margin-bottom: 0.75rem;
+}
+
+.detalle-mapa-llegar {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  text-decoration: none;
+}
+
 .detalle-acciones {
   display: flex;
   flex-wrap: wrap;
@@ -1491,11 +1634,24 @@ a:focus-visible {
 
   .header-fila {
     flex-wrap: wrap;
-    gap: 0.5rem;
+    gap: 0.4rem 0.6rem;
   }
 
   .marca {
-    font-size: 1.05rem;
+    font-size: 1rem;
+  }
+
+  /* Acciones de sesión compactas y pegadas a la derecha: en pantallas
+     chicas entran en la misma fila que la marca o, si bajan, quedan
+     alineadas a la derecha en vez de colgando a la izquierda. */
+  .sesion {
+    margin-left: auto;
+    gap: 0.5rem;
+  }
+
+  .btn-registrarme {
+    padding: 0.42rem 0.75rem;
+    font-size: 0.85rem;
   }
 
   .hero {

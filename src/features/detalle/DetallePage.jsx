@@ -3,6 +3,7 @@ import { Link, useParams } from 'react-router-dom'
 import CompartirButton from '../../shared/components/CompartirButton.jsx'
 import Icon from '../../shared/components/Icon.jsx'
 import ListaEstado from '../../shared/components/ListaEstado.jsx'
+import MapaUbicacion from '../../shared/components/MapaUbicacion.jsx'
 import WhatsappButton from '../../shared/components/WhatsappButton.jsx'
 import { DETALLE } from '../../shared/config/detalle.js'
 import { MODULOS } from '../../shared/config/modulos.js'
@@ -64,6 +65,8 @@ export default function DetallePage({ moduloKey }) {
                 )
               })}
             </div>
+
+            {item.lat && item.lng && <MapaUbicacion lat={item.lat} lng={item.lng} moduloKey={moduloKey} />}
 
             <div className="detalle-acciones">
               <WhatsappButton numero={item.whatsapp} />

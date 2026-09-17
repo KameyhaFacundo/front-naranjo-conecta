@@ -1,8 +1,18 @@
 import { useState } from 'react'
+import SelectorUbicacion from '../../shared/components/SelectorUbicacion.jsx'
 import { crearInstitucion } from './api.js'
 
 const TIPOS = ['escuela', 'salud', 'comuna', 'organizacion', 'club', 'iglesia', 'otro']
-const vacio = { tipo: 'escuela', nombre: '', descripcion: '', direccion: '', telefono: '', horarios: '' }
+const vacio = {
+  tipo: 'escuela',
+  nombre: '',
+  descripcion: '',
+  direccion: '',
+  telefono: '',
+  horarios: '',
+  lat: null,
+  lng: null,
+}
 
 export default function InstitucionForm({ onCreado }) {
   const [form, setForm] = useState(vacio)
@@ -63,6 +73,11 @@ export default function InstitucionForm({ onCreado }) {
         Horarios
         <input value={form.horarios} onChange={actualizarCampo('horarios')} />
       </label>
+      <SelectorUbicacion
+        lat={form.lat}
+        lng={form.lng}
+        onChange={(lat, lng) => setForm((prev) => ({ ...prev, lat, lng }))}
+      />
 
       <button type="submit" disabled={enviando}>
         {enviando ? 'Guardando…' : 'Guardar'}

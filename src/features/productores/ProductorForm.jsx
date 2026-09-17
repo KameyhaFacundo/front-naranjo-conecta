@@ -1,7 +1,17 @@
 import { useState } from 'react'
+import SelectorUbicacion from '../../shared/components/SelectorUbicacion.jsx'
 import { crearProductor } from './api.js'
 
-const vacio = { nombre: '', que_produce: '', que_vende: '', disponibilidad: '', zona: '', whatsapp: '' }
+const vacio = {
+  nombre: '',
+  que_produce: '',
+  que_vende: '',
+  disponibilidad: '',
+  zona: '',
+  whatsapp: '',
+  lat: null,
+  lng: null,
+}
 
 export default function ProductorForm({ onCreado }) {
   const [form, setForm] = useState(vacio)
@@ -56,6 +66,11 @@ export default function ProductorForm({ onCreado }) {
         WhatsApp
         <input value={form.whatsapp} onChange={actualizarCampo('whatsapp')} />
       </label>
+      <SelectorUbicacion
+        lat={form.lat}
+        lng={form.lng}
+        onChange={(lat, lng) => setForm((prev) => ({ ...prev, lat, lng }))}
+      />
 
       <button type="submit" disabled={enviando}>
         {enviando ? 'Publicando…' : 'Publicar'}

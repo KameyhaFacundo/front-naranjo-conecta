@@ -59,7 +59,7 @@ export default function RegisterPage() {
           <input type="password" value={form.password} onChange={actualizarCampo('password')} required minLength={8} />
         </label>
         <label>
-          ¿Cómo te vas a usar la plataforma principalmente?
+          ¿Cómo vas a usar la plataforma principalmente?
           <select value={form.rol} onChange={actualizarCampo('rol')}>
             {ROLES.map(([valor, texto]) => (
               <option key={valor} value={valor}>

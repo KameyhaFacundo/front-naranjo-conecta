@@ -1,8 +1,19 @@
 import { useState } from 'react'
 import CampoImagen from '../../shared/components/CampoImagen.jsx'
+import SelectorUbicacion from '../../shared/components/SelectorUbicacion.jsx'
 import { crearComercio } from './api.js'
 
-const vacio = { nombre: '', descripcion: '', direccion: '', horarios: '', whatsapp: '', telefono: '', logo_url: '' }
+const vacio = {
+  nombre: '',
+  descripcion: '',
+  direccion: '',
+  horarios: '',
+  whatsapp: '',
+  telefono: '',
+  logo_url: '',
+  lat: null,
+  lng: null,
+}
 
 export default function ComercioForm({ onCreado }) {
   const [form, setForm] = useState(vacio)
@@ -61,6 +72,11 @@ export default function ComercioForm({ onCreado }) {
         label="Logo (opcional)"
         valor={form.logo_url}
         onChange={(url) => setForm((prev) => ({ ...prev, logo_url: url }))}
+      />
+      <SelectorUbicacion
+        lat={form.lat}
+        lng={form.lng}
+        onChange={(lat, lng) => setForm((prev) => ({ ...prev, lat, lng }))}
       />
 
       <button type="submit" disabled={enviando}>

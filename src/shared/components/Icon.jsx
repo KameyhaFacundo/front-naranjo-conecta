@@ -93,6 +93,12 @@ const TRAZOS = {
       <path d="M4 6h.01M4 12h.01M4 18h.01" />
     </>
   ),
+  objetivo: (
+    <>
+      <circle cx="12" cy="12" r="3.2" />
+      <path d="M12 3v3.6M12 17.4V21M3 12h3.6M17.4 12H21" />
+    </>
+  ),
   compartir: (
     <>
       <circle cx="18" cy="5" r="2.6" />

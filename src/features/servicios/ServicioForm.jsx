@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import CampoImagen from '../../shared/components/CampoImagen.jsx'
-import Icon from '../../shared/components/Icon.jsx'
+import SelectorUbicacion from '../../shared/components/SelectorUbicacion.jsx'
 import { crearServicio } from './api.js'
 
 const vacio = {
@@ -16,36 +16,13 @@ const vacio = {
   lng: null,
 }
 
-// Redondeado a ~3 decimales (unos 100m) para que quede una ubicación
-// aproximada, nunca el domicilio exacto (ver notas de privacidad del README).
-function aproximar(valor) {
-  return Math.round(valor * 1000) / 1000
-}
-
 export default function ServicioForm({ onCreado }) {
   const [form, setForm] = useState(vacio)
   const [enviando, setEnviando] = useState(false)
   const [error, setError] = useState(null)
-  const [ubicando, setUbicando] = useState(false)
 
   function actualizarCampo(campo) {
     return (e) => setForm((prev) => ({ ...prev, [campo]: e.target.value }))
-  }
-
-  function usarUbicacionAproximada() {
-    if (!navigator.geolocation) return
-    setUbicando(true)
-    navigator.geolocation.getCurrentPosition(
-      (pos) => {
-        setForm((prev) => ({
-          ...prev,
-          lat: aproximar(pos.coords.latitude),
-          lng: aproximar(pos.coords.longitude),
-        }))
-        setUbicando(false)
-      },
-      () => setUbicando(false),
-    )
   }
 
   async function enviar(e) {
@@ -101,13 +78,11 @@ export default function ServicioForm({ onCreado }) {
         valor={form.foto_url}
         onChange={(url) => setForm((prev) => ({ ...prev, foto_url: url }))}
       />
-      <label>
-        Ubicación aproximada (para que te encuentren "cerca de mí")
-        <button type="button" onClick={usarUbicacionAproximada} disabled={ubicando}>
-          <Icon name="pin" size={16} />{' '}
-          {ubicando ? 'Obteniendo ubicación…' : form.lat ? 'Ubicación guardada ✓' : 'Usar mi ubicación aproximada'}
-        </button>
-      </label>
+      <SelectorUbicacion
+        lat={form.lat}
+        lng={form.lng}
+        onChange={(lat, lng) => setForm((prev) => ({ ...prev, lat, lng }))}
+      />
 
       <button type="submit" disabled={enviando}>
         {enviando ? 'Publicando…' : 'Publicar'}
