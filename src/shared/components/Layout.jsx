@@ -24,9 +24,16 @@ export default function Layout() {
     setMenuAbierto(false)
   }, [location.pathname])
 
+  useEffect(() => {
+    document.body.style.overflow = menuAbierto ? 'hidden' : ''
+    return () => {
+      document.body.style.overflow = ''
+    }
+  }, [menuAbierto])
+
   return (
     <div className="layout">
-      <header className="header">
+      <header className={`header ${menuAbierto ? 'header-menu-abierto' : ''}`}>
         <div className="header-fila">
           <div className="marca-fila">
             <NavLink to="/" className="marca">
