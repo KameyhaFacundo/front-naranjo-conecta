@@ -11,6 +11,12 @@ export const CAPAS_BASE = {
     attribution:
       'Tiles &copy; Esri — Source: Esri, Maxar, Earthstar Geographics, and the GIS User Community',
     maxZoom: 19,
+    // Esri no tiene resolución real más allá de esto en zonas rurales como
+    // El Naranjo: pasado este nivel devuelve tiles de "Map data not yet
+    // available". Con maxNativeZoom, Leaflet sigue dejando acercar hasta
+    // maxZoom pero reusa (agrandada) la última tile real en vez de pedir
+    // una que no existe.
+    maxNativeZoom: 17,
   },
   calles: {
     etiqueta: 'Calles',

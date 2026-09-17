@@ -4,7 +4,7 @@ import { CAPAS_BASE } from '../../features/mapa/capasBase.js'
 import { iconoDeCapa } from '../../features/mapa/marcadores.js'
 import Icon from './Icon.jsx'
 
-const { url, attribution, maxZoom } = CAPAS_BASE.satelite
+const { url, attribution, maxZoom, maxNativeZoom } = CAPAS_BASE.satelite
 
 /** Mini-mapa de la ficha de detalle: dónde queda y un botón para ir con Google Maps. */
 export default function MapaUbicacion({ lat, lng, moduloKey }) {
@@ -19,7 +19,7 @@ export default function MapaUbicacion({ lat, lng, moduloKey }) {
         scrollWheelZoom={false}
         className="detalle-mapa-lienzo"
       >
-        <TileLayer attribution={attribution} url={url} maxZoom={maxZoom} />
+        <TileLayer attribution={attribution} url={url} maxZoom={maxZoom} maxNativeZoom={maxNativeZoom} />
         <Marker position={[lat, lng]} icon={iconoDeCapa(moduloKey)} />
       </MapContainer>
       <a className="btn detalle-mapa-llegar" href={destino} target="_blank" rel="noopener noreferrer">

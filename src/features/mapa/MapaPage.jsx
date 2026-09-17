@@ -119,6 +119,7 @@ export default function MapaPage() {
                 attribution={CAPAS_BASE[capaBase].attribution}
                 url={CAPAS_BASE[capaBase].url}
                 maxZoom={CAPAS_BASE[capaBase].maxZoom}
+                maxNativeZoom={CAPAS_BASE[capaBase].maxNativeZoom}
               />
 
               <EnlaceMapa mapRef={mapRef} />

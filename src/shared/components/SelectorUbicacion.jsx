@@ -4,7 +4,7 @@ import { MapContainer, Marker, TileLayer, useMap, useMapEvents } from 'react-lea
 import { CAPAS_BASE } from '../../features/mapa/capasBase.js'
 import Icon from './Icon.jsx'
 
-const { url, attribution, maxZoom } = CAPAS_BASE.satelite
+const { url, attribution, maxZoom, maxNativeZoom } = CAPAS_BASE.satelite
 
 const CENTRO_EL_NARANJO = [
   Number(import.meta.env.VITE_MAPA_LAT ?? -26.4833),
@@ -75,7 +75,7 @@ export default function SelectorUbicacion({ lat, lng, onChange }) {
         scrollWheelZoom={false}
         className="selector-ubicacion-mapa"
       >
-        <TileLayer attribution={attribution} url={url} maxZoom={maxZoom} />
+        <TileLayer attribution={attribution} url={url} maxZoom={maxZoom} maxNativeZoom={maxNativeZoom} />
         <ClicksDelMapa onElegir={elegir} />
         <EnlaceDelMapa mapRef={mapRef} />
         {posicion && (
