@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
-import NaranjaMark from '../../shared/components/NaranjaMark.jsx'
+import SelloCitrico from '../../shared/components/SelloCitrico.jsx'
 import { useAuth } from '../../shared/hooks/useAuth.jsx'
 
 const ROLES = [
@@ -40,7 +40,7 @@ export default function RegisterPage() {
     <section className="pagina-auth">
       <form className="formulario" onSubmit={enviar}>
         <div className="auth-encabezado">
-          <NaranjaMark size={36} />
+          <SelloCitrico size={108} />
           <h1>Crear cuenta</h1>
           <p>Sumate a la comunidad de El Naranjo.</p>
         </div>

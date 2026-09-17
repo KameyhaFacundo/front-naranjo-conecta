@@ -1,5 +1,6 @@
 import { Link } from 'react-router-dom'
 import CompartirButton from './CompartirButton.jsx'
+import Estrellas from './Estrellas.jsx'
 import Icon from './Icon.jsx'
 import WhatsappButton from './WhatsappButton.jsx'
 
@@ -20,6 +21,7 @@ export default function Tarjeta({
   extra,
   imagen,
   enlace,
+  calificacion,
 }) {
   const tieneMedia = imagen !== undefined
 
@@ -44,6 +46,12 @@ export default function Tarjeta({
         {subtitulo && <p className="tarjeta-subtitulo">{subtitulo}</p>}
         {descripcion && <p className="tarjeta-descripcion">{descripcion}</p>}
         <div className="tarjeta-meta">
+          {calificacion?.total > 0 && (
+            <span className="tarjeta-calificacion">
+              <Estrellas valor={calificacion.promedio} size={14} />
+              {calificacion.promedio}
+            </span>
+          )}
           {zona && (
             <span>
               <Icon name="pin" size={15} /> {zona}

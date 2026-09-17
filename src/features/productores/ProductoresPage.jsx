@@ -51,6 +51,7 @@ export default function ProductoresPage() {
               zona={productor.zona}
               whatsapp={productor.whatsapp}
               enlace={`/productores/${productor.id}`}
+              calificacion={productor.calificacion}
             />
           ))}
         </div>

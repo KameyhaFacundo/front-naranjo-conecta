@@ -53,6 +53,7 @@ export default function ComerciosPage() {
               whatsapp={comercio.whatsapp}
               imagen={comercio.logo_url}
               enlace={`/comercios/${comercio.id}`}
+              calificacion={comercio.calificacion}
             />
           ))}
         </div>

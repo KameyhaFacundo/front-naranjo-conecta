@@ -769,13 +769,19 @@ a:focus-visible {
 
 .pagina-auth {
   display: flex;
+  align-items: center;
   justify-content: center;
+  min-height: 60vh;
   padding: 2rem 0;
+  background:
+    radial-gradient(640px 360px at 50% 0%, rgba(242, 161, 60, 0.28), transparent 70%),
+    radial-gradient(520px 320px at 100% 100%, rgba(75, 107, 47, 0.1), transparent 65%);
 }
 
 .pagina-auth .formulario {
   width: 100%;
   max-width: 440px;
+  animation: subir 420ms cubic-bezier(0.2, 0.7, 0.3, 1) both;
 }
 
 .auth-encabezado {
@@ -783,8 +789,14 @@ a:focus-visible {
   flex-direction: column;
   align-items: center;
   text-align: center;
-  gap: 0.55rem;
+  gap: 0.15rem;
   margin-bottom: 0.4rem;
+}
+
+.auth-encabezado .sello-citrico {
+  width: 108px;
+  margin-bottom: 0.6rem;
+  animation: sello-entrada 640ms cubic-bezier(0.2, 0.7, 0.3, 1) both;
 }
 
 .auth-encabezado h1 {
@@ -1553,7 +1565,7 @@ a:focus-visible {
 
 .detalle h1 {
   font-size: clamp(1.6rem, 4vw, 2.2rem);
-  margin: 0 0 1.25rem;
+  margin: 0 0 0.85rem;
 }
 
 .detalle-campos {
@@ -1714,6 +1726,198 @@ a:focus-visible {
 
   .mis-item .acciones-fila {
     width: 100%;
+  }
+}
+
+/* Calificaciones: estrellas y opiniones */
+
+.estrellas {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.1rem;
+  line-height: 0;
+}
+
+.estrella {
+  display: block;
+  color: var(--borde);
+}
+
+.estrella.llena {
+  color: var(--amarillo-sol);
+}
+
+.estrellas-valor {
+  margin-left: 0.35rem;
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: var(--tierra-suave);
+}
+
+.estrella-boton {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.45rem;
+  border: none;
+  background: none;
+  box-shadow: none;
+  border-radius: 999px;
+  cursor: pointer;
+}
+
+.estrella-boton:hover,
+.estrella-boton:active {
+  transform: none;
+  filter: none;
+  box-shadow: none;
+}
+
+.estrella-boton:focus-visible {
+  outline: 2px solid var(--verde-hoja);
+  outline-offset: 2px;
+}
+
+.detalle-calificacion {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin: 0 0 1.25rem;
+  color: var(--tierra-suave);
+  font-size: 0.9rem;
+}
+
+.tarjeta-calificacion {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+  color: var(--tierra-suave);
+}
+
+.resenas {
+  margin-top: 2.5rem;
+  padding-top: 1.75rem;
+  border-top: 1px solid var(--borde);
+}
+
+.resenas-header {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem;
+  margin-bottom: 1.25rem;
+}
+
+.resenas-header h2 {
+  font-size: 1.35rem;
+  margin: 0;
+}
+
+.resenas-resumen {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  color: var(--tierra-suave);
+  font-size: 0.9rem;
+}
+
+.resenas-resumen strong {
+  color: var(--tierra);
+}
+
+.resena-form {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  background: var(--grad-panel);
+  border: 1px solid var(--borde);
+  border-radius: var(--radio);
+  padding: 1.1rem 1.25rem;
+  margin-bottom: 1.75rem;
+  box-shadow: var(--sombra-suave);
+}
+
+.resena-form-titulo {
+  margin: 0;
+  font-weight: 600;
+}
+
+.resena-form textarea {
+  resize: vertical;
+  min-height: 72px;
+}
+
+.resena-form button {
+  align-self: flex-start;
+}
+
+.resena-login {
+  color: var(--tierra-suave);
+  margin-bottom: 1.75rem;
+}
+
+.resenas-lista {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.resena {
+  background: var(--papel);
+  border: 1px solid var(--borde);
+  border-radius: var(--radio);
+  padding: 1rem 1.1rem;
+  box-shadow: var(--sombra-suave);
+}
+
+.resena-cabecera {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.5rem 0.75rem;
+  margin-bottom: 0.35rem;
+}
+
+.resena-cabecera strong {
+  font-size: 0.95rem;
+}
+
+.resena-fecha {
+  color: var(--tierra-suave);
+  font-size: 0.8rem;
+  margin-left: auto;
+}
+
+.resena p {
+  margin: 0;
+}
+
+.resena-borrar {
+  margin-top: 0.6rem;
+  background: none;
+  border: 1px solid var(--borde);
+  color: var(--rojo-alerta);
+  box-shadow: none;
+  padding: 0.3rem 0.7rem;
+  font-size: 0.82rem;
+}
+
+.resena-borrar:hover {
+  transform: none;
+  filter: none;
+  box-shadow: none;
+  border-color: var(--rojo-alerta);
+  background: rgba(179, 38, 30, 0.06);
+}
+
+@media (max-width: 640px) {
+  .resena-fecha {
+    margin-left: 0;
+    flex-basis: 100%;
   }
 }
 

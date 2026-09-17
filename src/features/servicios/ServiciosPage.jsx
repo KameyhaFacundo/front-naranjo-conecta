@@ -73,6 +73,7 @@ export default function ServiciosPage() {
               whatsapp={servicio.whatsapp}
               imagen={servicio.foto_url}
               enlace={`/servicios/${servicio.id}`}
+              calificacion={servicio.calificacion}
               extra={
                 servicio.distancia_km != null && (
                   <span>

@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react'
 import { Link, useParams } from 'react-router-dom'
 import CompartirButton from '../../shared/components/CompartirButton.jsx'
+import Estrellas from '../../shared/components/Estrellas.jsx'
 import Icon from '../../shared/components/Icon.jsx'
 import ListaEstado from '../../shared/components/ListaEstado.jsx'
 import MapaUbicacion from '../../shared/components/MapaUbicacion.jsx'
@@ -8,7 +9,10 @@ import WhatsappButton from '../../shared/components/WhatsappButton.jsx'
 import { DETALLE } from '../../shared/config/detalle.js'
 import { MODULOS } from '../../shared/config/modulos.js'
 import { ETIQUETAS_ESTADO } from '../reclamos/api.js'
+import Resenas from '../resenas/Resenas.jsx'
 import { obtenerPublicacion } from './api.js'
+
+const CALIFICABLES = ['comercios', 'servicios', 'productores']
 
 export default function DetallePage({ moduloKey }) {
   const { id } = useParams()
@@ -53,6 +57,16 @@ export default function DetallePage({ moduloKey }) {
 
             <h1>{titulo}</h1>
 
+            {item.calificacion?.total > 0 && (
+              <div className="detalle-calificacion">
+                <Estrellas valor={item.calificacion.promedio} size={17} />
+                <span>
+                  {item.calificacion.promedio} · {item.calificacion.total}{' '}
+                  {item.calificacion.total === 1 ? 'opinión' : 'opiniones'}
+                </span>
+              </div>
+            )}
+
             <div className="detalle-campos">
               {config.campos.map(([campo, label]) => {
                 const valor = item[campo]
@@ -72,6 +86,8 @@ export default function DetallePage({ moduloKey }) {
               <WhatsappButton numero={item.whatsapp} />
               <CompartirButton titulo={titulo} texto={item.descripcion} ruta={`/${moduloKey}/${id}`} />
             </div>
+
+            {CALIFICABLES.includes(moduloKey) && <Resenas moduloKey={moduloKey} itemId={id} />}
           </>
         )}
       </ListaEstado>
