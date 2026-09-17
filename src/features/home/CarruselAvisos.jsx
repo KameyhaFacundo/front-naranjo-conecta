@@ -15,7 +15,7 @@ const ETIQUETAS_TIPO = {
   otro: 'Aviso',
 }
 
-const INTERVALO_MS = 6000
+const INTERVALO_MS = 3000
 
 /**
  * Portada rotativa: mezcla fotos de El Naranjo (FOTOS_LOCALIDAD) con las
