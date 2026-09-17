@@ -15,10 +15,13 @@ const enlaces = [
   { to: '/avisos', label: 'Avisos', icono: 'megafono' },
 ]
 
+const RUTAS_AUTH = ['/ingresar', '/registrarme']
+
 export default function Layout() {
   const { user, logout } = useAuth()
   const location = useLocation()
   const [menuAbierto, setMenuAbierto] = useState(false)
+  const enPaginaAuth = !user && RUTAS_AUTH.includes(location.pathname)
 
   useEffect(() => {
     setMenuAbierto(false)
@@ -46,55 +49,64 @@ export default function Layout() {
             </Link>
           </div>
 
-          <button
-            type="button"
-            className="btn-menu"
-            onClick={() => setMenuAbierto((v) => !v)}
-            aria-expanded={menuAbierto}
-            aria-label={menuAbierto ? 'Cerrar menú' : 'Abrir menú'}
-          >
-            <Icon name={menuAbierto ? 'cerrar' : 'menu'} size={22} />
-          </button>
+          {!enPaginaAuth && (
+            <button
+              type="button"
+              className="btn-menu"
+              onClick={() => setMenuAbierto((v) => !v)}
+              aria-expanded={menuAbierto}
+              aria-label={menuAbierto ? 'Cerrar menú' : 'Abrir menú'}
+            >
+              <Icon name={menuAbierto ? 'cerrar' : 'menu'} size={22} />
+            </button>
+          )}
 
-          <div className={`sesion ${menuAbierto ? 'sesion-abierta' : ''}`}>
-            {user ? (
-              <>
-                <span>{user.nombre}</span>
-                <button type="button" onClick={logout}>
-                  Salir
-                </button>
-              </>
-            ) : (
-              <>
-                <NavLink to="/ingresar">Ingresar</NavLink>
-                <NavLink to="/registrarme" className="btn-registrarme">
-                  Crear cuenta
-                </NavLink>
-              </>
-            )}
-          </div>
+          {!enPaginaAuth && (
+            <div className={`sesion ${menuAbierto ? 'sesion-abierta' : ''}`}>
+              {user ? (
+                <>
+                  <span>{user.nombre}</span>
+                  <button type="button" onClick={logout}>
+                    Salir
+                  </button>
+                </>
+              ) : (
+                <>
+                  <NavLink to="/ingresar">Ingresar</NavLink>
+                  <NavLink to="/registrarme" className="btn-registrarme">
+                    Crear cuenta
+                  </NavLink>
+                </>
+              )}
+            </div>
+          )}
         </div>
 
-        <nav className={`nav ${menuAbierto ? 'nav-abierta' : ''}`}>
-          {enlaces.map((enlace) => (
-            <NavLink key={enlace.to} to={enlace.to} end={enlace.fin}>
-              <Icon name={enlace.icono} size={17} />
-              {enlace.label}
-            </NavLink>
-          ))}
-          {user && (
-            <NavLink to="/mis-publicaciones">
-              <Icon name="lista" size={17} />
-              Mis publicaciones
-            </NavLink>
-          )}
-          {user?.rol === 'admin' && (
-            <NavLink to="/admin">
-              <Icon name="escudo" size={17} />
-              Panel
-            </NavLink>
-          )}
-        </nav>
+        {/* En login/registro no hace falta el nav: el foco es completar el
+            formulario, y ese form ya tiene su propio link para cambiar
+            entre ingresar y crear cuenta. */}
+        {!enPaginaAuth && (
+          <nav className={`nav ${menuAbierto ? 'nav-abierta' : ''}`}>
+            {enlaces.map((enlace) => (
+              <NavLink key={enlace.to} to={enlace.to} end={enlace.fin}>
+                <Icon name={enlace.icono} size={17} />
+                {enlace.label}
+              </NavLink>
+            ))}
+            {user && (
+              <NavLink to="/mis-publicaciones">
+                <Icon name="lista" size={17} />
+                Mis publicaciones
+              </NavLink>
+            )}
+            {user?.rol === 'admin' && (
+              <NavLink to="/admin">
+                <Icon name="escudo" size={17} />
+                Panel
+              </NavLink>
+            )}
+          </nav>
+        )}
       </header>
 
       <main className="contenido">
