@@ -1,6 +1,8 @@
 import { apiClient } from '../../shared/api/client.js'
+import { mockServicios, paginar, USE_MOCKS } from '../../mock.js'
 
 export function listarServicios(params = {}) {
+  if (USE_MOCKS) return Promise.resolve(paginar(mockServicios, params))
   return apiClient.get('/servicios', { params }).then((res) => res.data)
 }
 
