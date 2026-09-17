@@ -188,6 +188,18 @@ a:focus-visible {
     height: 32px;
     padding: 0;
   }
+
+  /* "Inicio" (login/registro) no es tan reconocible como el ícono de
+     alerta de Emergencias sin la palabra al lado, y ahí sobra lugar. */
+  .btn-emergencia.btn-inicio {
+    width: auto;
+    height: auto;
+    padding: 0.4rem 0.7rem;
+  }
+
+  .btn-emergencia.btn-inicio span {
+    display: inline;
+  }
 }
 
 .header {
@@ -1005,7 +1017,6 @@ a:focus-visible {
   justify-content: center;
   min-height: 40vh;
   padding: 1rem 0;
-  background: radial-gradient(640px 360px at 50% 0%, rgba(242, 161, 60, 0.28), transparent 70%);
 }
 
 /* Login/registro: se ceban en achicar todo el margen alrededor posible
