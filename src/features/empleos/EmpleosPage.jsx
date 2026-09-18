@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useMemo, useState } from 'react'
 import CargarMas from '../../shared/components/CargarMas.jsx'
 import ListaEstado from '../../shared/components/ListaEstado.jsx'
 import Modal from '../../shared/components/Modal.jsx'
@@ -14,11 +14,20 @@ const TABS = [
   { value: 'busco_trabajador', label: 'Busco trabajador' },
 ]
 
+const CAMPOS_BUSQUEDA = ['titulo', 'descripcion', 'zona', 'habilidades', 'requisitos', 'experiencia']
+
 export default function EmpleosPage() {
   const { user } = useAuth()
   const [tipo, setTipo] = useState('')
+  const [q, setQ] = useState('')
   const [mostrarForm, setMostrarForm] = useState(false)
   const { items, cargando, cargandoMas, error, recargar, cargarMas, hayMas } = useListado(listarEmpleos, { tipo })
+
+  const texto = q.trim().toLowerCase()
+  const filtrados = useMemo(() => {
+    if (!texto) return items
+    return items.filter((i) => CAMPOS_BUSQUEDA.some((campo) => String(i[campo] ?? '').toLowerCase().includes(texto)))
+  }, [items, texto])
 
   return (
     <section>
@@ -40,6 +49,12 @@ export default function EmpleosPage() {
             </button>
           ))}
         </div>
+        <input
+          type="search"
+          placeholder="Buscar empleo..."
+          value={q}
+          onChange={(e) => setQ(e.target.value)}
+        />
         {user && (
           <button type="button" onClick={() => setMostrarForm(true)}>
             Publicar
@@ -58,9 +73,9 @@ export default function EmpleosPage() {
         </Modal>
       )}
 
-      <ListaEstado cargando={cargando} error={error} vacio={!cargando && items.length === 0} variante="tarjetas" cantidad={6}>
+      <ListaEstado cargando={cargando} error={error} vacio={!cargando && filtrados.length === 0} variante="tarjetas" cantidad={6}>
         <div className="grilla-tarjetas">
-          {items.map((empleo) => (
+          {filtrados.map((empleo) => (
             <Tarjeta
               key={empleo.id}
               icono="maletin"
