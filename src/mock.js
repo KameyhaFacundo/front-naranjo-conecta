@@ -616,60 +616,25 @@ function haceDias(n) {
   return new Date(Date.now() - n * 86400000).toISOString()
 }
 
-function enDias(n) {
-  return new Date(Date.now() + n * 86400000).toISOString()
-}
-
 export const mockAvisos = [
   {
     id: 1,
-    tipo: 'corte_servicio',
-    titulo: 'Corte de agua programado',
-    cuerpo:
-      'El jueves se corta el suministro de agua entre las 9 y las 16 hs por trabajos de mantenimiento en la cisterna. Junten agua con anticipación.',
+    tipo: 'comunicado',
+    titulo: 'Bienvenidos a El Naranjo',
+    cuerpo: 'El cartel de entrada a la localidad, sobre la RP321 — la puerta de entrada a nuestra comuna.',
     fecha_evento: null,
-    foto_url: null,
+    foto_url: '/images/cartel-entrada.png',
     publicado: haceDias(1),
     activo: true,
   },
   {
     id: 2,
-    tipo: 'reunion',
-    titulo: 'Reunión vecinal en la plaza',
-    cuerpo: 'Convocamos a todos los vecinos a una reunión para hablar sobre el arreglo de calles. Se sirve mate cocido.',
-    fecha_evento: enDias(5),
-    foto_url: foto('naranjo-reunion', 640, 420),
-    publicado: haceDias(2),
-    activo: true,
-  },
-  {
-    id: 3,
-    tipo: 'evento',
-    titulo: 'Feria de productores este fin de semana',
-    cuerpo: 'Sábado y domingo en la plaza principal: miel, quesos, verduras y artesanías de productores locales.',
-    fecha_evento: enDias(3),
-    foto_url: foto('naranjo-feria', 640, 420),
-    publicado: haceDias(3),
-    activo: true,
-  },
-  {
-    id: 4,
-    tipo: 'obra',
-    titulo: 'Bacheo en Ruta 301',
-    cuerpo: 'Comenzó el bacheo entre el km 8 y el km 14. Circular con precaución, hay reducción de un carril.',
+    tipo: 'comunicado',
+    titulo: 'El Naranjo y El Sunchal, una sola comuna',
+    cuerpo: 'El cartel que celebra a las dos localidades que forman la comuna: El Naranjo y El Sunchal.',
     fecha_evento: null,
-    foto_url: foto('naranjo-obra', 640, 420),
-    publicado: haceDias(6),
-    activo: true,
-  },
-  {
-    id: 5,
-    tipo: 'actividad',
-    titulo: 'Taller de horticultura para vecinos',
-    cuerpo: 'Actividad gratuita en la Comuna, organizada junto a la huerta orgánica Vicente. Cupos limitados.',
-    fecha_evento: enDias(10),
-    foto_url: foto('naranjo-taller', 640, 420),
-    publicado: haceDias(4),
+    foto_url: '/images/cartel-sunchal-naranjo.png',
+    publicado: haceDias(2),
     activo: true,
   },
 ]

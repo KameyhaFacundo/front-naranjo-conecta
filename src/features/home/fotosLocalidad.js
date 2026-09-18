@@ -7,4 +7,4 @@
  *   '/images/plaza.jpg',
  *   '/images/iglesia.jpg',
  */
-export const FOTOS_LOCALIDAD = ['/images/cartel-entrada.png']
+export const FOTOS_LOCALIDAD = ['/images/cartel-entrada.png', '/images/cartel-sunchal-naranjo.png']
