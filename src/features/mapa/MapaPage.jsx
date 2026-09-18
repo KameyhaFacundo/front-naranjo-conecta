@@ -1,5 +1,5 @@
 import 'leaflet/dist/leaflet.css'
-import { useMemo, useRef, useState } from 'react'
+import { useEffect, useMemo, useRef, useState } from 'react'
 import { AttributionControl, MapContainer, Marker, Popup, TileLayer, useMap } from 'react-leaflet'
 import { Link } from 'react-router-dom'
 import CompartirButton from '../../shared/components/CompartirButton.jsx'
@@ -20,6 +20,26 @@ const CAPAS = [
 
 const SIN_PUNTOS = { servicios: [], comercios: [], instituciones: [], reclamos: [] }
 
+// Sin acentos ni mayúsculas, para que "gomeria" encuentre "Gomería".
+function normalizar(texto) {
+  return (texto ?? '')
+    .toString()
+    .normalize('NFD')
+    .replace(/[̀-ͯ]/g, '')
+    .toLowerCase()
+    .trim()
+}
+
+// Compara en ambos sentidos para tolerar singular/plural ("iglesia" busca
+// y encuentra tipo "iglesia" aunque el usuario escriba "iglesias").
+function coincideBusqueda(item, capa, query) {
+  const campos = [item.titulo, item.nombre, item.categoria, item.subcategoria, item.tipo, item.zona, item.direccion, capa.etiqueta]
+  return campos.some((campo) => {
+    const c = normalizar(campo)
+    return c && (c.includes(query) || query.includes(c))
+  })
+}
+
 function EnlaceMapa({ mapRef }) {
   mapRef.current = useMap()
   return null
@@ -31,6 +51,8 @@ export default function MapaPage() {
   const [capaBase, setCapaBase] = useState('satelite')
   const [miUbicacion, setMiUbicacion] = useState(null)
   const [ubicando, setUbicando] = useState(false)
+  const [busqueda, setBusqueda] = useState('')
+  const [busquedaAplicada, setBusquedaAplicada] = useState('')
   const mapRef = useRef(null)
 
   const puntos = useMemo(() => {
@@ -38,8 +60,48 @@ export default function MapaPage() {
     return datos
   }, [datos])
 
-  const capasVisibles = CAPAS.filter((capa) => capasActivas.has(capa.clave))
-  const totalVisible = capasVisibles.reduce((acc, capa) => acc + (puntos[capa.clave]?.length ?? 0), 0)
+  // Debounce corto: evita refiltrar/zoomear en cada tecla mientras se escribe.
+  useEffect(() => {
+    const id = setTimeout(() => setBusquedaAplicada(normalizar(busqueda)), 300)
+    return () => clearTimeout(id)
+  }, [busqueda])
+
+  // Con 1 sola letra casi todo "coincide" — recién buscamos de verdad a partir de 2.
+  const busquedaActiva = busquedaAplicada.length >= 2 ? busquedaAplicada : ''
+
+  // Mientras se busca, la búsqueda manda en todas las categorías (no solo
+  // en las que estén tildadas): así "gomería" aparece aunque el filtro de
+  // Servicios esté destildado.
+  const puntosFiltrados = useMemo(() => {
+    const resultado = {}
+    CAPAS.forEach((capa) => {
+      const conUbicacion = (puntos[capa.clave] ?? []).filter((item) => item.lat && item.lng)
+      if (busquedaActiva) {
+        resultado[capa.clave] = conUbicacion.filter((item) => coincideBusqueda(item, capa, busquedaActiva))
+      } else {
+        resultado[capa.clave] = capasActivas.has(capa.clave) ? conUbicacion : []
+      }
+    })
+    return resultado
+  }, [puntos, capasActivas, busquedaActiva])
+
+  const totalVisible = CAPAS.reduce((acc, capa) => acc + (puntosFiltrados[capa.clave]?.length ?? 0), 0)
+
+  // Encuadra el mapa en los resultados: si es uno solo, se acerca a ese
+  // punto; si hay varios, ajusta el zoom para que entren todos.
+  useEffect(() => {
+    if (!busquedaActiva || !mapRef.current) return
+    const coincidencias = CAPAS.flatMap((capa) => puntosFiltrados[capa.clave] ?? [])
+    if (coincidencias.length === 0) return
+    if (coincidencias.length === 1) {
+      mapRef.current.flyTo([coincidencias[0].lat, coincidencias[0].lng], 17)
+    } else {
+      mapRef.current.flyToBounds(
+        coincidencias.map((item) => [item.lat, item.lng]),
+        { padding: [60, 60], maxZoom: 17 },
+      )
+    }
+  }, [busquedaActiva, puntosFiltrados])
 
   function alternarCapa(clave) {
     setCapasActivas((prev) => {
@@ -70,6 +132,20 @@ export default function MapaPage() {
         <p>Comercios, servicios, instituciones y reclamos, todo en un mismo mapa.</p>
       </header>
 
+      <div className="barra-acciones">
+        <input
+          type="search"
+          placeholder="Buscar en el mapa (ej: gomería, iglesia, comuna)…"
+          value={busqueda}
+          onChange={(e) => setBusqueda(e.target.value)}
+        />
+        {busqueda && (
+          <button type="button" className="btn-secundario" onClick={() => setBusqueda('')}>
+            Limpiar
+          </button>
+        )}
+      </div>
+
       <div className="filtros-mapa">
         {CAPAS.map((capa) => (
           <label key={capa.clave} style={{ '--color-capa': colorDeCapa(capa.clave) }}>
@@ -77,10 +153,14 @@ export default function MapaPage() {
               type="checkbox"
               checked={capasActivas.has(capa.clave)}
               onChange={() => alternarCapa(capa.clave)}
+              disabled={Boolean(busquedaActiva)}
             />
             <Icon name={capa.icono} size={16} className="filtro-icono" /> {capa.etiqueta}
           </label>
         ))}
+        {busquedaActiva && (
+          <span className="texto-suave">Buscando en todas las categorías, no solo en las tildadas.</span>
+        )}
       </div>
 
       <div className="barra-acciones">
@@ -134,10 +214,8 @@ export default function MapaPage() {
 
               {miUbicacion && <Marker position={miUbicacion} icon={iconoMiUbicacion()} />}
 
-              {capasVisibles.flatMap((capa) =>
-                (puntos[capa.clave] ?? [])
-                  .filter((item) => item.lat && item.lng)
-                  .map((item) => (
+              {CAPAS.flatMap((capa) =>
+                (puntosFiltrados[capa.clave] ?? []).map((item) => (
                     <Marker
                       key={`${capa.clave}-${item.id}`}
                       position={[item.lat, item.lng]}
@@ -198,7 +276,11 @@ export default function MapaPage() {
           </div>
 
           {!error && totalVisible === 0 && (
-            <p className="estado-vacio">No hay nada para mostrar con los filtros elegidos.</p>
+            <p className="estado-vacio">
+              {busquedaActiva
+                ? `No se encontró nada para "${busqueda.trim()}".`
+                : 'No hay nada para mostrar con los filtros elegidos.'}
+            </p>
           )}
         </>
       )}
