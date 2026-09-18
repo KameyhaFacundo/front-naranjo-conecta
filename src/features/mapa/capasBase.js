@@ -8,8 +8,8 @@ function numEnv(valor, porDefecto) {
 }
 
 export const CENTRO_EL_NARANJO = [
-  numEnv(import.meta.env.VITE_MAPA_LAT, -26.6619),
-  numEnv(import.meta.env.VITE_MAPA_LNG, -65.0478),
+  numEnv(import.meta.env.VITE_MAPA_LAT, -26.676389),
+  numEnv(import.meta.env.VITE_MAPA_LNG, -65.051111),
 ]
 export const ZOOM_MAPA_DEFECTO = numEnv(import.meta.env.VITE_MAPA_ZOOM, 14)
 
