@@ -150,7 +150,17 @@ export default function MapaPage() {
                               <Icon name="pin" size={14} /> {item.zona ?? item.direccion}
                             </span>
                           )}
-                          <WhatsappButton numero={item.whatsapp} />
+                          <div className="popup-mapa-acciones">
+                            <WhatsappButton numero={item.whatsapp} />
+                            <a
+                              className="btn-como-llegar"
+                              href={`https://www.google.com/maps/dir/?api=1&destination=${item.lat},${item.lng}`}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                            >
+                              <Icon name="mapa" size={15} /> Cómo llegar
+                            </a>
+                          </div>
                         </div>
                       </Popup>
                     </Marker>

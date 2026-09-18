@@ -1405,8 +1405,40 @@ a:focus-visible {
   color: var(--tierra-suave);
 }
 
-.popup-mapa .btn-whatsapp {
+.popup-mapa-acciones {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
   margin-top: 0.3rem;
+}
+
+.popup-mapa-acciones .btn-whatsapp {
+  margin-top: 0;
+}
+
+.btn-como-llegar {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.35rem;
+  background: var(--papel);
+  color: var(--tierra);
+  border: 1px solid var(--borde);
+  text-decoration: none;
+  border-radius: var(--radio-chico);
+  padding: 0.5rem 0.85rem;
+  font-size: 0.82rem;
+  font-weight: 600;
+  box-shadow: none;
+  transition: border-color var(--transicion), color var(--transicion);
+}
+
+.btn-como-llegar:hover {
+  transform: none;
+  filter: none;
+  box-shadow: none;
+  border-color: var(--naranja);
+  color: var(--naranja-quemado);
 }
 
 /* Registros: reclamos y avisos se leen como fichas, no como tarjetas de producto */
