@@ -83,17 +83,28 @@ export default function MapaPage() {
         ))}
       </div>
 
-      <div className="pestañas">
-        {Object.entries(CAPAS_BASE).map(([clave, capa]) => (
-          <button
-            key={clave}
-            type="button"
-            className={capaBase === clave ? 'activa' : ''}
-            onClick={() => setCapaBase(clave)}
-          >
-            {capa.etiqueta}
-          </button>
-        ))}
+      <div className="barra-acciones">
+        <div className="pestañas">
+          {Object.entries(CAPAS_BASE).map(([clave, capa]) => (
+            <button
+              key={clave}
+              type="button"
+              className={capaBase === clave ? 'activa' : ''}
+              onClick={() => setCapaBase(clave)}
+            >
+              {capa.etiqueta}
+            </button>
+          ))}
+        </div>
+
+        <a
+          className="btn btn-secundario enlace-zona-mapa"
+          href={`https://www.google.com/maps/@${CENTRO_EL_NARANJO[0]},${CENTRO_EL_NARANJO[1]},16z`}
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          <Icon name="mapa" size={15} /> Ver la zona en Google Maps
+        </a>
       </div>
 
       {error && <p className="estado-error">No se pudo cargar el mapa. Probá de nuevo en un rato.</p>}

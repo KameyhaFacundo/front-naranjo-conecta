@@ -1182,6 +1182,14 @@ a:focus-visible {
   gap: 0.6rem;
 }
 
+.enlace-zona-mapa {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  text-decoration: none;
+  flex-shrink: 0;
+}
+
 .filtros-mapa {
   display: flex;
   flex-wrap: wrap;
