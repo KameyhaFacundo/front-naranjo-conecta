@@ -1,12 +1,13 @@
 import { useState } from 'react'
-import { ROLES } from '../auth/roles.js'
 import { useAuth } from '../../shared/hooks/useAuth.jsx'
 
+// El rol (vecino, prestador, comerciante, etc.) se elige una sola vez al
+// crear la cuenta y no se puede tocar desde acá — evita que alguien se
+// autoasigne otro rol después de registrarse.
 export default function PerfilPage() {
   const { user, actualizarPerfil } = useAuth()
   const [form, setForm] = useState({
     nombre: user.nombre ?? '',
-    rol: user.rol,
     telefono: user.telefono ?? '',
     whatsapp: user.whatsapp ?? '',
     zona: user.zona ?? '',
@@ -28,9 +29,6 @@ export default function PerfilPage() {
     setExito(false)
     try {
       const payload = { ...form }
-      // El rol de admin no se toca desde acá: el backend no lo acepta
-      // como valor de autoservicio (se asigna solo desde la base).
-      if (user.rol === 'admin') delete payload.rol
 
       if (passwordNueva) {
         payload.password = passwordNueva
@@ -67,24 +65,6 @@ export default function PerfilPage() {
           Nombre
           <input value={form.nombre} onChange={actualizarCampo('nombre')} required />
         </label>
-
-        {user.rol === 'admin' ? (
-          <label>
-            Rol
-            <input value="Administrador" disabled />
-          </label>
-        ) : (
-          <label>
-            ¿Cómo usás la plataforma principalmente?
-            <select value={form.rol} onChange={actualizarCampo('rol')}>
-              {ROLES.map(([valor, texto]) => (
-                <option key={valor} value={valor}>
-                  {texto}
-                </option>
-              ))}
-            </select>
-          </label>
-        )}
 
         <label>
           Teléfono

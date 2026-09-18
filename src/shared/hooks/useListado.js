@@ -6,11 +6,15 @@ import { useCallback, useEffect, useState } from 'react'
  * `cargarFn` es una función (params) => Promise. Si la respuesta viene
  * paginada (Laravel: `{ data, meta }`), expone `hayMas` y `cargarMas`
  * para traer la página siguiente y acumular los resultados.
+ *
+ * `habilitado` (default true): en false no pide nada — para listados que
+ * solo debe ver cierto rol, así no viaja de más ni un instante antes de
+ * saber si el usuario puede verlo.
  */
-export function useListado(cargarFn, params = {}) {
+export function useListado(cargarFn, params = {}, habilitado = true) {
   const [items, setItems] = useState([])
   const [meta, setMeta] = useState(null)
-  const [cargando, setCargando] = useState(true)
+  const [cargando, setCargando] = useState(habilitado)
   const [cargandoMas, setCargandoMas] = useState(false)
   const [error, setError] = useState(null)
 
@@ -49,8 +53,13 @@ export function useListado(cargarFn, params = {}) {
   }, [cargar, meta])
 
   useEffect(() => {
-    recargar()
-  }, [recargar])
+    if (habilitado) {
+      recargar()
+    } else {
+      setItems([])
+      setCargando(false)
+    }
+  }, [recargar, habilitado])
 
   const hayMas = Boolean(meta && meta.current_page < meta.last_page)
 
