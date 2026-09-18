@@ -40,7 +40,7 @@ export default function InstitucionesPage() {
         </Modal>
       )}
 
-      <ListaEstado cargando={cargando} error={error} vacio={!cargando && items.length === 0}>
+      <ListaEstado cargando={cargando} error={error} vacio={!cargando && items.length === 0} variante="tarjetas" cantidad={6}>
         <div className="grilla-tarjetas">
           {items.map((institucion) => (
             <Tarjeta

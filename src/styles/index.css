@@ -1055,6 +1055,93 @@ a:focus-visible {
   color: var(--rojo-alerta);
 }
 
+/* Esqueletos de carga: mismo layout que el contenido real (tarjetas,
+   filas, tabla) para que la página no "salte" cuando llegan los datos. */
+.esqueleto {
+  position: relative;
+  overflow: hidden;
+  background: var(--arena-oscura);
+  border-radius: var(--radio-chico);
+}
+
+.esqueleto::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  transform: translateX(-100%);
+  background: linear-gradient(90deg, transparent, rgba(255, 252, 246, 0.7), transparent);
+  animation: esqueleto-brillo 1.6s ease-in-out infinite;
+}
+
+@keyframes esqueleto-brillo {
+  to {
+    transform: translateX(100%);
+  }
+}
+
+.esqueleto-linea {
+  height: 0.85rem;
+}
+
+.esqueleto-tarjeta {
+  background: var(--papel);
+  border: 1px solid var(--borde);
+  border-radius: var(--radio);
+  overflow: hidden;
+  box-shadow: var(--sombra-suave);
+}
+
+.esqueleto-tarjeta-media {
+  aspect-ratio: 16 / 10;
+  border-radius: 0;
+}
+
+.esqueleto-tarjeta-cuerpo {
+  display: flex;
+  flex-direction: column;
+  gap: 0.65rem;
+  padding: 1.25rem;
+}
+
+.esqueleto-fila {
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+  padding: 1rem 1.15rem;
+  border-bottom: 1px solid var(--borde);
+}
+
+.esqueleto-fila:last-child {
+  border-bottom: none;
+}
+
+.esqueleto-tabla-fila {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 0.75rem 0.8rem;
+  border-bottom: 1px solid var(--borde);
+}
+
+.esqueleto-tabla-fila:last-child {
+  border-bottom: none;
+}
+
+.esqueleto-tabla-celda {
+  height: 0.85rem;
+}
+
+.esqueleto-tabla-celda-miniatura {
+  flex: 0 0 auto;
+  width: 46px;
+  height: 46px;
+  border-radius: 8px;
+}
+
+.detalle-imagen.esqueleto {
+  border: 1px solid var(--borde);
+}
+
 .estado-vacio-centrado {
   display: flex;
   flex-direction: column;

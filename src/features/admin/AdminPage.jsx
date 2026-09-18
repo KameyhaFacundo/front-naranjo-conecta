@@ -174,7 +174,7 @@ export default function AdminPage() {
             </Modal>
           )}
 
-          <ListaEstado cargando={cargando} error={error} vacio={!cargando && visibles.length === 0}>
+          <ListaEstado cargando={cargando} error={error} vacio={!cargando && visibles.length === 0} variante="tabla" cantidad={6}>
             <div className="tabla-admin-scroll">
               <table className="tabla-admin">
                 <thead>

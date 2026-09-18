@@ -46,7 +46,7 @@ export default function ReclamosPage() {
         </Modal>
       )}
 
-      <ListaEstado cargando={cargando} error={error} vacio={!cargando && items.length === 0}>
+      <ListaEstado cargando={cargando} error={error} vacio={!cargando && items.length === 0} variante="lista" cantidad={4}>
         <ul className="lista-reclamos">
           {items.map((reclamo) => (
             <li key={reclamo.id} className={`reclamo reclamo-${reclamo.estado}`}>

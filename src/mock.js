@@ -23,7 +23,7 @@ function foto(seed, w = 640, h = 420) {
 
 // Centro de El Naranjo, con un pequeño offset determinístico por item para
 // que no queden todos los pines apilados en el mismo punto del mapa.
-const CENTRO = [-26.4833, -64.75]
+const CENTRO = [-26.6619, -65.0478]
 function ubicacion(i) {
   const anillo = (i % 6) - 2.5
   return {

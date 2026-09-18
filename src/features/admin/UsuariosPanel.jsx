@@ -143,7 +143,7 @@ export default function UsuariosPanel() {
         </select>
       </div>
 
-      <ListaEstado cargando={cargando} error={error} vacio={!cargando && items.length === 0}>
+      <ListaEstado cargando={cargando} error={error} vacio={!cargando && items.length === 0} variante="tabla" cantidad={5}>
         <div className="tabla-admin-scroll">
           <table className="tabla-admin tabla-usuarios">
             <thead>

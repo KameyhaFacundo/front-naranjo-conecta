@@ -40,7 +40,7 @@ export default function AvisosPage() {
         </Modal>
       )}
 
-      <ListaEstado cargando={cargando} error={error} vacio={!cargando && items.length === 0}>
+      <ListaEstado cargando={cargando} error={error} vacio={!cargando && items.length === 0} variante="lista" cantidad={4}>
         <ul className="lista-avisos">
           {items.map((aviso) => (
             <li key={aviso.id} className="aviso">

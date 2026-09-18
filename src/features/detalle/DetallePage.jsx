@@ -43,7 +43,7 @@ export default function DetallePage({ moduloKey }) {
         ← Volver a {modulo.label}
       </Link>
 
-      <ListaEstado cargando={cargando} error={error} vacio={!cargando && !item}>
+      <ListaEstado cargando={cargando} error={error} vacio={!cargando && !item} variante="detalle">
         {item && (
           <>
             {imagen && <img className="detalle-imagen" src={imagen} alt={titulo} />}

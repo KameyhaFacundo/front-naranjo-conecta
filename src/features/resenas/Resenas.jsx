@@ -108,7 +108,7 @@ export default function Resenas({ moduloKey, itemId }) {
         </p>
       )}
 
-      <ListaEstado cargando={cargando} error={error} vacio={!cargando && resenas.length === 0}>
+      <ListaEstado cargando={cargando} error={error} vacio={!cargando && resenas.length === 0} variante="resenas" cantidad={2}>
         <ul className="resenas-lista">
           {resenas.map((r) => (
             <li key={r.id} className="resena">

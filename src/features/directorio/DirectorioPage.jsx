@@ -184,7 +184,7 @@ export default function DirectorioPage() {
           )
         })()}
 
-      <ListaEstado cargando={cargando} error={error} vacio={!cargando && items.length === 0}>
+      <ListaEstado cargando={cargando} error={error} vacio={!cargando && items.length === 0} variante="tarjetas" cantidad={6}>
         <div className="grilla-tarjetas">
           {items.map(({ tipo: t, item }) => (
             <Tarjeta key={`${t.clave}-${item.id}`} icono={t.icono} enlace={`/${t.clave}/${item.id}`} {...t.aTarjeta(item)} />
