@@ -1,25 +1,24 @@
 import 'leaflet/dist/leaflet.css'
-import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
+import { useEffect, useMemo, useRef, useState } from 'react'
 import { AttributionControl, MapContainer, Marker, Popup, TileLayer, useMap } from 'react-leaflet'
 import { Link } from 'react-router-dom'
 import CompartirButton from '../../shared/components/CompartirButton.jsx'
 import Icon from '../../shared/components/Icon.jsx'
 import WhatsappButton from '../../shared/components/WhatsappButton.jsx'
-import { useAuth } from '../../shared/hooks/useAuth.jsx'
 import { useListado } from '../../shared/hooks/useListado.js'
-import { ETIQUETAS_ESTADO } from '../reclamos/api.js'
 import { puntosDelMapa } from './api.js'
 import { CAPAS_BASE, CENTRO_EL_NARANJO, ZOOM_MAPA_DEFECTO } from './capasBase.js'
 import { colorDeCapa, iconoDeCapa, iconoMiUbicacion } from './marcadores.js'
 
-const TODAS_LAS_CAPAS = [
+// Los reclamos no se muestran en el mapa (son sensibles: nombre de zona
+// y descripción del vecino) — el equipo comunal los revisa desde /reclamos.
+const CAPAS = [
   { clave: 'servicios', etiqueta: 'Servicios', icono: 'herramienta' },
   { clave: 'comercios', etiqueta: 'Comercios', icono: 'tienda' },
   { clave: 'instituciones', etiqueta: 'Instituciones', icono: 'edificio' },
-  { clave: 'reclamos', etiqueta: 'Reclamos', icono: 'alerta' },
 ]
 
-const SIN_PUNTOS = { servicios: [], comercios: [], instituciones: [], reclamos: [] }
+const SIN_PUNTOS = { servicios: [], comercios: [], instituciones: [] }
 
 // Sin acentos ni mayúsculas, para que "gomeria" encuentre "Gomería".
 function normalizar(texto) {
@@ -47,17 +46,8 @@ function EnlaceMapa({ mapRef }) {
 }
 
 export default function MapaPage() {
-  const { user } = useAuth()
-  const esAdmin = user?.rol === 'admin'
-  // Los reclamos son sensibles: solo el equipo comunal los ve en el mapa
-  // (misma restricción que en /reclamos). Ni se piden si no es admin.
-  const cargarPuntos = useCallback(() => puntosDelMapa(esAdmin), [esAdmin])
-  const { items: datos, cargando, error } = useListado(cargarPuntos)
-  const capas = useMemo(
-    () => (esAdmin ? TODAS_LAS_CAPAS : TODAS_LAS_CAPAS.filter((c) => c.clave !== 'reclamos')),
-    [esAdmin],
-  )
-  const [capasActivas, setCapasActivas] = useState(() => new Set(TODAS_LAS_CAPAS.map((c) => c.clave)))
+  const { items: datos, cargando, error } = useListado(puntosDelMapa)
+  const [capasActivas, setCapasActivas] = useState(() => new Set(CAPAS.map((c) => c.clave)))
   const [capaBase, setCapaBase] = useState('satelite')
   const [miUbicacion, setMiUbicacion] = useState(null)
   const [ubicando, setUbicando] = useState(false)
@@ -84,7 +74,7 @@ export default function MapaPage() {
   // Servicios esté destildado.
   const puntosFiltrados = useMemo(() => {
     const resultado = {}
-    capas.forEach((capa) => {
+    CAPAS.forEach((capa) => {
       const conUbicacion = (puntos[capa.clave] ?? []).filter((item) => item.lat && item.lng)
       if (busquedaActiva) {
         resultado[capa.clave] = conUbicacion.filter((item) => coincideBusqueda(item, capa, busquedaActiva))
@@ -93,15 +83,15 @@ export default function MapaPage() {
       }
     })
     return resultado
-  }, [puntos, capas, capasActivas, busquedaActiva])
+  }, [puntos, capasActivas, busquedaActiva])
 
-  const totalVisible = capas.reduce((acc, capa) => acc + (puntosFiltrados[capa.clave]?.length ?? 0), 0)
+  const totalVisible = CAPAS.reduce((acc, capa) => acc + (puntosFiltrados[capa.clave]?.length ?? 0), 0)
 
   // Encuadra el mapa en los resultados: si es uno solo, se acerca a ese
   // punto; si hay varios, ajusta el zoom para que entren todos.
   useEffect(() => {
     if (!busquedaActiva || !mapRef.current) return
-    const coincidencias = capas.flatMap((capa) => puntosFiltrados[capa.clave] ?? [])
+    const coincidencias = CAPAS.flatMap((capa) => puntosFiltrados[capa.clave] ?? [])
     if (coincidencias.length === 0) return
     if (coincidencias.length === 1) {
       mapRef.current.flyTo([coincidencias[0].lat, coincidencias[0].lng], 17)
@@ -111,7 +101,7 @@ export default function MapaPage() {
         { padding: [60, 60], maxZoom: 17 },
       )
     }
-  }, [busquedaActiva, puntosFiltrados, capas])
+  }, [busquedaActiva, puntosFiltrados])
 
   function alternarCapa(clave) {
     setCapasActivas((prev) => {
@@ -139,9 +129,7 @@ export default function MapaPage() {
     <section>
       <header className="seccion-header">
         <h1>Mapa de El Naranjo</h1>
-        <p>
-          Comercios, servicios e instituciones{esAdmin ? ', y reclamos' : ''}, todo en un mismo mapa.
-        </p>
+        <p>Comercios, servicios e instituciones, todo en un mismo mapa.</p>
       </header>
 
       <div className="barra-acciones">
@@ -159,7 +147,7 @@ export default function MapaPage() {
       </div>
 
       <div className="filtros-mapa">
-        {capas.map((capa) => (
+        {CAPAS.map((capa) => (
           <label key={capa.clave} style={{ '--color-capa': colorDeCapa(capa.clave) }}>
             <input
               type="checkbox"
@@ -226,7 +214,7 @@ export default function MapaPage() {
 
               {miUbicacion && <Marker position={miUbicacion} icon={iconoMiUbicacion()} />}
 
-              {capas.flatMap((capa) =>
+              {CAPAS.flatMap((capa) =>
                 (puntosFiltrados[capa.clave] ?? []).map((item) => (
                     <Marker
                       key={`${capa.clave}-${item.id}`}
@@ -251,7 +239,6 @@ export default function MapaPage() {
                           <Link to={`/${capa.clave}/${item.id}`} className="popup-mapa-titulo">
                             {item.titulo ?? item.nombre ?? item.categoria}
                           </Link>
-                          {item.estado && <span className="etiqueta-estado">{ETIQUETAS_ESTADO[item.estado]}</span>}
                           {item.descripcion && <p className="popup-mapa-descripcion">{item.descripcion}</p>}
                           {(item.zona ?? item.direccion) && (
                             <span className="popup-mapa-zona">
