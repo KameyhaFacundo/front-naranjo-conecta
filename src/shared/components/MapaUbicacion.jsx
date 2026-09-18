@@ -1,5 +1,5 @@
 import 'leaflet/dist/leaflet.css'
-import { MapContainer, Marker, TileLayer } from 'react-leaflet'
+import { AttributionControl, MapContainer, Marker, TileLayer } from 'react-leaflet'
 import { CAPAS_BASE } from '../../features/mapa/capasBase.js'
 import { iconoDeCapa } from '../../features/mapa/marcadores.js'
 import Icon from './Icon.jsx'
@@ -18,8 +18,10 @@ export default function MapaUbicacion({ lat, lng, moduloKey }) {
         maxZoom={maxZoom}
         scrollWheelZoom={false}
         className="detalle-mapa-lienzo"
+        attributionControl={false}
       >
         <TileLayer attribution={attribution} url={url} maxZoom={maxZoom} maxNativeZoom={maxNativeZoom} />
+        <AttributionControl position="bottomright" prefix={false} />
         <Marker position={[lat, lng]} icon={iconoDeCapa(moduloKey)} />
       </MapContainer>
       <a className="btn detalle-mapa-llegar" href={destino} target="_blank" rel="noopener noreferrer">

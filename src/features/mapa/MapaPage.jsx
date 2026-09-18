@@ -1,6 +1,6 @@
 import 'leaflet/dist/leaflet.css'
 import { useMemo, useRef, useState } from 'react'
-import { MapContainer, Marker, Popup, TileLayer, useMap } from 'react-leaflet'
+import { AttributionControl, MapContainer, Marker, Popup, TileLayer, useMap } from 'react-leaflet'
 import { Link } from 'react-router-dom'
 import CompartirButton from '../../shared/components/CompartirButton.jsx'
 import Icon from '../../shared/components/Icon.jsx'
@@ -103,7 +103,13 @@ export default function MapaPage() {
       ) : (
         <>
           <div className="mapa-contenedor">
-            <MapContainer center={CENTRO_EL_NARANJO} zoom={ZOOM_MAPA_DEFECTO} maxZoom={19} className="mapa">
+            <MapContainer
+              center={CENTRO_EL_NARANJO}
+              zoom={ZOOM_MAPA_DEFECTO}
+              maxZoom={19}
+              className="mapa"
+              attributionControl={false}
+            >
               <TileLayer
                 key={capaBase}
                 attribution={CAPAS_BASE[capaBase].attribution}
@@ -111,6 +117,7 @@ export default function MapaPage() {
                 maxZoom={CAPAS_BASE[capaBase].maxZoom}
                 maxNativeZoom={CAPAS_BASE[capaBase].maxNativeZoom}
               />
+              <AttributionControl position="bottomright" prefix={false} />
 
               <EnlaceMapa mapRef={mapRef} />
 

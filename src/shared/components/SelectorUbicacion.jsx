@@ -1,6 +1,6 @@
 import 'leaflet/dist/leaflet.css'
 import { useRef, useState } from 'react'
-import { MapContainer, Marker, TileLayer, useMap, useMapEvents } from 'react-leaflet'
+import { AttributionControl, MapContainer, Marker, TileLayer, useMap, useMapEvents } from 'react-leaflet'
 import { CAPAS_BASE, CENTRO_EL_NARANJO } from '../../features/mapa/capasBase.js'
 import Icon from './Icon.jsx'
 
@@ -69,8 +69,10 @@ export default function SelectorUbicacion({ lat, lng, onChange }) {
         maxZoom={maxZoom}
         scrollWheelZoom={false}
         className="selector-ubicacion-mapa"
+        attributionControl={false}
       >
         <TileLayer attribution={attribution} url={url} maxZoom={maxZoom} maxNativeZoom={maxNativeZoom} />
+        <AttributionControl position="bottomright" prefix={false} />
         <ClicksDelMapa onElegir={elegir} />
         <EnlaceDelMapa mapRef={mapRef} />
         {posicion && (
